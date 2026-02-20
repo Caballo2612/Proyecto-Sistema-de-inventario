@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const Sidebar = ({ IsOpen }) => {
     return (
@@ -43,9 +44,11 @@ export const Sidebar = ({ IsOpen }) => {
                                 viewBox="0 0 24 24">
                                 <path stroke="#fff" stroke-width="1.5" d="M9.918 10H7.082A1.57 1.57 0 0 0 5.5 11.557v5.89A1.57 1.57 0 0 0 7.082 19h2.836a1.57 1.57 0 0 0 1.582-1.555v-5.889a1.57 1.57 0 0 0-1.582-1.555m0-6.001H7.082A1.54 1.54 0 0 0 5.5 5.495v1.014A1.54 1.54 0 0 0 7.082 8h2.836A1.54 1.54 0 0 0 11.5 6.508V5.494A1.54 1.54 0 0 0 9.918 4m5.164 9h2.835a1.57 1.57 0 0 0 1.583-1.555V5.557A1.57 1.57 0 0 0 17.918 4h-2.836A1.57 1.57 0 0 0 13.5 5.557v5.888A1.57 1.57 0 0 0 15.082 13m0 6h2.835a1.54 1.54 0 0 0 1.583-1.492v-1.014A1.54 1.54 0 0 0 17.918 15h-2.836a1.54 1.54 0 0 0-1.582 1.493v1.013A1.54 1.54 0 0 0 15.082 19" />
                             </svg>
-                            <span>
-                                Dashboard
-                            </span>
+                            <Link to="/dashboard">
+                                <span>
+                                    Dashboard
+                                </span>
+                            </Link>
                         </li>
                         <li className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
                             <svg
