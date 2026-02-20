@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Sidebar = ({ IsOpen }) => {
     return (
-            <div className={`inset-0 z-20 bg-gray-800 min-h-svh shadow-2xl text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-80' : 'w-0'}`}>
+            <div className={`inset-0 z-20 bg-gray-800 min-h-svh shadow-2xl text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
                     <div className='p-2 bg-blue-600 text-lg flex flex-row h-13 items-center uppercase gap-2'>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@ export const Sidebar = ({ IsOpen }) => {
                                 </path>
                             </svg>
                             <span>
-                                Empleados
+                                Usuarios
                             </span>
                         </li>
                         <li className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>

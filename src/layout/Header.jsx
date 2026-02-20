@@ -22,7 +22,7 @@ export const Header = ({ IsOpen, toggleMenu }) => {
                     </svg>
                 </div>
                 <div>
-                    <span className='text-2xl ml-4'>Nombre empresa</span>
+                    <span className='text-2xl ml-4 hidden md:block lg:block xl:block'>Nombre empresa</span>
                 </div>
                 <div className='ml-auto mr-4 flex items-center gap-2 group cursor-pointer' onClick={() => toggleMenu('settings')}>
                     <svg
