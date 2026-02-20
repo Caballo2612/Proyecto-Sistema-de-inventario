@@ -1,25 +1,11 @@
-import React, { useState } from 'react'
-import { Sidebar } from './Sidebar'
+import React from 'react'
 
-export const Header = () => {
-    const [Isopen, setIsOpen] = useState({
-        sidebar: true,
-        settings: false
-    })
 
-    const toggleMenu = (menu) => {
-        setIsOpen(prev => ({
-            ...prev,
-            [menu]: !prev[menu]
-        }))
-    };
+export const Header = ({ IsOpen, toggleMenu }) => {
 
     return (
-        <main className='flex flex-row'>
-            {Isopen.sidebar && (
-                <Sidebar />
-            )}
-            <header className='w-full h-13 bg-blue-600 text-white flex items-center '>
+        <div className='flex-row flex'>
+            <header className='w-full h-13 bg-blue-600 text-white flex items-center'>
                 <div>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -64,8 +50,11 @@ export const Header = () => {
                     >
                         <path d="m16.003 18.626 7.081-7.081L25 13.46l-8.997 8.998-9.003-9 1.917-1.916z" />
                     </svg>
-                    {Isopen.settings && (
-                        <div className='absolute right-4 top-16 bg-gray-800 text-white rounded-md shadow-lg w-46 z-10 p-2'>
+                    {IsOpen.settings && (
+                        <div className='absolute right-4 top-16 bg-gray-800 text-white rounded-md shadow-lg w-46 z-10 p-2 inline-block'>
+                            
+                            {/* Un piquito que no sé si dejar xd  <div className="absolute -top-2 right-2.5 w-4 h-5 bg-gray-800 rotate-45 -z-10"></div> */}
+                            
                             <div className='flex hover:bg-gray-700 p-2 cursor-pointer text-lg flex-row items-center gap-2 rounded-md'>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -98,6 +87,6 @@ export const Header = () => {
 
                 </div>
             </header>
-        </main>
+        </div>
     )
 }

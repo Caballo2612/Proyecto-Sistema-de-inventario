@@ -1,9 +1,8 @@
 import React from 'react'
 
-export const Sidebar = () => {
+export const Sidebar = ({ IsOpen }) => {
     return (
-        <>
-            <div className='inset-0 z-20 bg-gray-800 w-80 min-h-svh shadow-2xl text-white overflow-x-hidden rounded-br-lg'>
+            <div className={`inset-0 z-20 bg-gray-800 min-h-svh shadow-2xl text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-80' : 'w-0'}`}>
                     <div className='p-2 bg-blue-600 text-lg flex flex-row h-13 items-center uppercase gap-2'>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -192,6 +191,5 @@ export const Sidebar = () => {
                         </li>
                     </div>
                 </div>
-        </>
     )
 }
