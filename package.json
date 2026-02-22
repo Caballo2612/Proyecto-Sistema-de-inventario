@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "SIS-INV": "concurrently \"npm:dev\" \"npm:Server\"",
     "build": "vite build",
+    "Server": "nodemon ./src/models/server/AppDB.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -13,6 +15,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
+    "express": "^5.2.1",
     "mysql2": "^3.17.2",
     "picocolors": "^1.1.1",
     "react": "^19.2.0",
@@ -25,10 +28,12 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "nodemon": "^3.1.14",
     "vite": "^7.3.1"
   }
 }
