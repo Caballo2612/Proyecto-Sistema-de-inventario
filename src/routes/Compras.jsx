@@ -7,8 +7,8 @@ export const Compras = () => {
         { header: 'ID', identifier: 'id' },
         { header: 'Producto', identifier: 'name' },
         { header: 'Cantidad', identifier: 'stock' },
-        { header: 'Precio', identifier: 'precio' },
-        { header: 'Proveedor', identifier: 'proveedor' },
+        { header: 'Precio', identifier: 'price' },
+        { header: 'Proveedor', identifier: 'provider' },
         { header: 'Fecha', identifier: 'fecha' },
     ];
 

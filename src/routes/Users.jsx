@@ -24,17 +24,27 @@ export const Users = () => {
         { header: 'Tipo', identifier: 'user_type' },
     ];
 
-    const Actions = [
-        { name: 'Editar', identifier: 'edit' },
-        { name: 'Eliminar', identifier: 'delete' },
+    const FormMenu = [
+        <>
+            <input type="text" name='nombre' placeholder='Nombre' className='border rounded-md px-2 py-1 focus:outline-none'/>
+            <input type="text" name='email' placeholder='Email' className='border rounded-md px-2 py-1 focus:outline-none'/>
+            <input type="text" name="contraseña" placeholder='Contraseña' className='border rounded-md px-2 py-1 focus:outline-none'/>
+            <input type="text" name='documento' placeholder='N. Documento' className='border rounded-md px-2 py-1 focus:outline-none'/>
+            <select name="tipo_documento" className='border border-black rounded-md px-2 py-1 focus:outline-none text-gray-500'>
+                <option value="cedula de ciudadania">Cedula De Ciudadania</option>
+                <option value="cedula de extranjeria">Cedula De Extranjeria</option>
+                <option value="P.P.T">Pasaporte De Permiso Temporal</option>
+            </select>
+                <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200'>Agregar</button>
+        </>
     ]
 
     return ( 
                 <DataTables
                     columns={columns}
                     data={usuarios}
-                    Actions={Actions}
                     Title="Lista de Usuarios"
+                    FormMenu={FormMenu}
                 />
     )
 }

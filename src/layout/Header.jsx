@@ -4,7 +4,7 @@ import React from 'react'
 export const Header = ({ IsOpen, toggleMenu }) => {
 
     return (
-        <div className='flex-row flex'>
+        <div className='flex-row flex z-50'>
             <header className='w-full h-13 bg-blue-600 text-white flex items-center'>
                 <div>
                     <svg
