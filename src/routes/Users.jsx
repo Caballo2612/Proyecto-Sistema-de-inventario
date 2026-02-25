@@ -24,27 +24,39 @@ export const Users = () => {
         { header: 'Tipo', identifier: 'user_type' },
     ];
 
-    const FormMenu = [
-        <>
-            <input type="text" name='nombre' placeholder='Nombre' className='border rounded-md px-2 py-1 focus:outline-none'/>
-            <input type="text" name='email' placeholder='Email' className='border rounded-md px-2 py-1 focus:outline-none'/>
-            <input type="text" name="contraseña" placeholder='Contraseña' className='border rounded-md px-2 py-1 focus:outline-none'/>
-            <input type="text" name='documento' placeholder='N. Documento' className='border rounded-md px-2 py-1 focus:outline-none'/>
-            <select name="tipo_documento" className='border border-black rounded-md px-2 py-1 focus:outline-none text-gray-500'>
-                <option value="cedula de ciudadania">Cedula De Ciudadania</option>
-                <option value="cedula de extranjeria">Cedula De Extranjeria</option>
-                <option value="P.P.T">Pasaporte De Permiso Temporal</option>
-            </select>
-                <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200'>Agregar</button>
-        </>
-    ]
+    const Fields = [
+        { type: "text", name: "nombre", placeholder: "Nombre", required: true },
+        { type: "email", name: "email", placeholder: "Email", required: true },
+        { type: "password", name: "password", placeholder: "Contraseña" },
+        { type: "text", name: "documento", placeholder: "Numero De Documento", required: true},
+        {
+            type: "select",
+            name: "tipo_documento",
+            label: "Tipo De Documento",
+            required: true,
+            options: [
+                { value: "cc", label: "Cédula de Ciudadanía" },
+                { value: "ce", label: "Cédula de Extranjería" }
+            ]
+        },
+        {
+            type: "select",
+            name: "user_type",
+            label: "Tipo De Usuario",
+            required: true,
+            options: [
+                { value: "admin", label: "Admin" },
+                { value: "Usuario", label: "Empleado" }
+            ]
+        }
+    ];
 
-    return ( 
-                <DataTables
-                    columns={columns}
-                    data={usuarios}
-                    Title="Lista de Usuarios"
-                    FormMenu={FormMenu}
-                />
+    return (
+        <DataTables
+            columns={columns}
+            data={usuarios}
+            Title="Lista de Usuarios"
+            Fields={Fields}
+        />
     )
 }

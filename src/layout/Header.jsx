@@ -53,7 +53,7 @@ export const Header = ({ IsOpen, toggleMenu }) => {
                 </div>
 
                 {IsOpen.settings && (
-                    <div className={'absolute right-4 top-16 bg-gray-800 text-white rounded-md shadow-lg w-46 z-10 p-2 inline-block'}>
+                    <div className='absolute right-4 top-16 bg-gray-800 text-white rounded-md shadow-lg w-46 z-10 p-2 inline-block'>
 
                         {/* Un piquito que no sé si dejar xd  <div className="absolute -top-2 right-2.5 w-4 h-5 bg-gray-800 rotate-45 -z-10"></div> */}
 

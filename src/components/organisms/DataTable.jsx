@@ -1,10 +1,47 @@
 import { useState } from 'react'
 
-export const DataTables = ({ columns, data, Title, FormMenu }) => {
+export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
 
     const [IsOpenRow, setIsOpenRow] = useState(null);
 
-    const [IsOpenForm, setIsOpenForm] = useState(false);
+    const [IsOpen, setIsOpen] = useState({
+        Form: false,
+        Select: null
+    });
+
+    const toggleSelect = (fieldName) => {
+        setIsOpen(prev => ({
+            ...prev,
+            Select: prev.Select === fieldName ? null : fieldName
+        }));
+    };
+
+    const toggleMenu = (menu) => {
+        setIsOpen(prev => ({
+            ...prev,
+            [menu]: !prev[menu]
+        }))
+    };
+
+    const [formData, setFormData] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (onSubmit) onSubmit(formData);
+        setIsOpen(prev => ({
+            ...prev,
+            Form: false
+        }));
+        setFormData({});
+    }
 
     return (
         <div className='m-4 bg-white border-t-3 border-2 border-gray-200 border-t-blue-500 rounded-md'>
@@ -12,30 +49,32 @@ export const DataTables = ({ columns, data, Title, FormMenu }) => {
                 <h2 className=''>
                     {Title}
                 </h2>
-                <button
-                    onClick={() => setIsOpenForm(!IsOpenForm)}
-                    className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center gap-1'
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        fill="#fff"
-                        stroke="#fff"
-                        className='rotate-135'
-                        viewBox="0 0 52 52">
-                        <path d="m31 25.4 13-13.1c.6-.6.6-1.5 0-2.1l-2-2.1c-.6-.6-1.5-.6-2.1 0L26.8 21.2c-.4.4-1 .4-1.4 0L12.3 8c-.6-.6-1.5-.6-2.1 0l-2.1 2.1c-.6.6-.6 1.5 0 2.1l13.1 13.1c.4.4.4 1 0 1.4L8 39.9c-.6.6-.6 1.5 0 2.1l2.1 2.1c.6.6 1.5.6 2.1 0L25.3 31c.4-.4 1-.4 1.4 0l13.1 13.1c.6.6 1.5.6 2.1 0L44 42c.6-.6.6-1.5 0-2.1L31 26.8c-.4-.4-.4-1 0-1.4z" />
-                    </svg>
-                    Nuevo
-                </button>
+                {Fields && (
+                    <button
+                        onClick={() => toggleMenu('Form')}
+                        className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center gap-1'
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            fill="#fff"
+                            stroke="#fff"
+                            className='rotate-135'
+                            viewBox="0 0 52 52">
+                            <path d="m31 25.4 13-13.1c.6-.6.6-1.5 0-2.1l-2-2.1c-.6-.6-1.5-.6-2.1 0L26.8 21.2c-.4.4-1 .4-1.4 0L12.3 8c-.6-.6-1.5-.6-2.1 0l-2.1 2.1c-.6.6-.6 1.5 0 2.1l13.1 13.1c.4.4.4 1 0 1.4L8 39.9c-.6.6-.6 1.5 0 2.1l2.1 2.1c.6.6 1.5.6 2.1 0L25.3 31c.4-.4 1-.4 1.4 0l13.1 13.1c.6.6 1.5.6 2.1 0L44 42c.6-.6.6-1.5 0-2.1L31 26.8c-.4-.4-.4-1 0-1.4z" />
+                        </svg>
+                        Nuevo
+                    </button>
+                )}
             </div>
 
-            {FormMenu && IsOpenForm && (
+            {Fields && IsOpen.Form && (
                 <>
-                    <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10' onClick={() => setIsOpenForm(!IsOpenForm)}>
+                    <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10'>
                     </div>
-                    <div className='m-4 absolute z-200 bg-white border-t-3 border-2 border-gray-200 border-t-blue-500 shadow-md rounded-md'>
-                        <div className=''>
+                    <div className='m-4 absolute z-200 bg-white border-t-3 border-t-blue-600 shadow-md rounded-md'>
+                        <div className={``}>
                             <div className='text-lg font-semibold p-4 border-b border-b-gray-300 flex items-center text-center gap-2'>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -49,9 +88,71 @@ export const DataTables = ({ columns, data, Title, FormMenu }) => {
                                 </svg>
                                 Nuevo
                             </div>
-                            <form className='flex flex-col gap-3 p-4 w-6xl'>
-                                {FormMenu}
+                            <form className='flex flex-col gap-3 p-4 w-6xl' id='formData' onSubmit={handleSubmit}>
+                                {Fields.map((field, index) => {
+
+                                    if (field.type === "select") {
+                                        return (
+                                            <div key={index} className='relative'>
+                                                <button
+                                                    type='button'
+                                                    name={field.name}
+                                                    value={formData[field.name] || ""}
+                                                    onClick={() => toggleSelect(field.name)}
+                                                    className="border rounded-md px-4 py-2"
+                                                    required={field.required}
+                                                >
+                                                    {formData[field.name]
+                                                        ? field.options.find(o => o.value === formData[field.name])?.label
+                                                        : "Seleccione..."}
+                                                </button>
+
+                                                    <div className={`mt-1 w-full bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-40 border' : 'max-h-0 border-0 border-white'}`}>
+                                                        {field.options.map((option, i) => (
+                                                            <div key={i}>
+                                                                <button
+                                                                    type='button'
+                                                                    className='block w-full text-left px-3 py-2 hover:bg-gray-100 rounded-sm cursor-pointer'
+                                                                    value={option.value}
+                                                                    onClick={() => {
+                                                                        setFormData(prev => ({
+                                                                            ...prev,
+                                                                            [field.name]: option.value
+                                                                        }));
+                                                                        setIsOpen(prev => ({
+                                                                            ...prev,
+                                                                            Select: null
+                                                                        }));
+                                                                    }}
+                                                                >
+                                                                    {option.label}
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                
+                                            </div>
+                                        )
+                                    }
+
+                                    return (
+                                        <input
+                                            key={index}
+                                            type={field.type}
+                                            name={field.name}
+                                            placeholder={field.placeholder}
+                                            value={formData[field.name] || ""}
+                                            onChange={handleChange}
+                                            className='border rounded-md px-2 py-1 focus:outline-none'
+                                            required={field.required}
+                                        />
+                                    )
+                                })}
                             </form>
+                            <div className='flex justify-end p-3 border border-gray-200 gap-2'>
+                                <button type='submit' form='formData' className='bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-500 transition-colors duration-200'>Guardar</button>
+                                <button type='button' className='text-white px-4 py-2 rounded-sm bg-gray-500 hover:bg-gray-400 transition-colors duration-200' onClick={() => toggleMenu("Form")}>Cancelar</button>
+                            </div>
                         </div>
                     </div>
                 </>
@@ -81,6 +182,7 @@ export const DataTables = ({ columns, data, Title, FormMenu }) => {
                     />
                 </div>
             </div>
+
             <div className='p-5 rounded-lg overflow-hidden'>
                 <table className="min-w-full border border-gray-200">
                     <thead className="">
