@@ -1,5 +1,5 @@
 export class PriceFormats {
-    static formatCOP(value) {
+    static COP(value) {
         return new Intl.NumberFormat("es-CO", {
             style: "currency",
             currency: "COP",
@@ -8,7 +8,7 @@ export class PriceFormats {
         }).format(value);
     };
 
-    static formatUSD(value) {
+    static USD(value) {
         return new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
@@ -17,7 +17,7 @@ export class PriceFormats {
         }).format(value);
     };
 
-    static formatEUR(value) {
+    static EUR(value) {
         return new Intl.NumberFormat("de-DE", {
             style: "currency",
             currency: "EUR",

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { PriceFormats } from '../../utils/priceFormats';
 
 export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
 
@@ -207,7 +208,10 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                             >
                                 {columns.map((col, colIndex) => (
                                     <td key={colIndex} className="px-3 py-2 border-none">
-                                        {row[col.identifier]}
+                                        {col.identifier === "price"
+                                            ? PriceFormats.COP(row[col.identifier])
+                                            : row[col.identifier]
+                                        }
                                     </td>
                                 ))}
 
@@ -277,6 +281,6 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
