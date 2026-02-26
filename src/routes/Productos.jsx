@@ -25,7 +25,7 @@ export const Productos = () => {
 
     const Fields = [
         { type: "text", name: "nombre", placeholder: "Nombre Del Producto", required: true },
-        { type: "text", name: "price", placeholder: "Precio Del Producto", required: true },
+        { type: "number", name: "price", placeholder: "Precio Del Producto", required: true },
         { type: "number", name: "stock", placeholder: "Cantidad Comprada" },
         {
             type: "select",
@@ -33,8 +33,8 @@ export const Productos = () => {
             label: "Seleccionar Proveedor",
             required: true,
             options: [
-                { value: "cc", label: "Cédula de Ciudadanía" },
-                { value: "ce", label: "Cédula de Extranjería" }
+                { value: "ADIDAS", label: "ADIDAS" },
+                { value: "D1", label: "D1" }
             ]
         }
     ];

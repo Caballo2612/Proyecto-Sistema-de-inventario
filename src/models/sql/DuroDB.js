@@ -33,6 +33,17 @@ export class DuroModel {
             throw new Error("Error consultando la base de datos", error);
         }
     }
+    
+    static async countAll() {
+        try {
+            const [usuariosRows] = await connection.query("SELECT COUNT(*) AS total FROM usuarios")
+            const [productosRows] = await connection.query("SELECT COUNT(*) AS total FROM productos")
+            return { usuarios: usuariosRows[0].total, productos: productosRows[0].total,}
+
+        } catch (error) {
+            throw new Error("Error al contar los datos", error)
+        }
+    }
 }
 
 DuroModel.getAll()

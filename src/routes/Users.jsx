@@ -32,7 +32,7 @@ export const Users = () => {
         {
             type: "select",
             name: "tipo_documento",
-            label: "Tipo De Documento",
+            label: "Seleccione Tipo De Documento",
             required: true,
             options: [
                 { value: "cc", label: "Cédula de Ciudadanía" },
@@ -42,7 +42,7 @@ export const Users = () => {
         {
             type: "select",
             name: "user_type",
-            label: "Tipo De Usuario",
+            label: "Seleccione Tipo De Usuario",
             required: true,
             options: [
                 { value: "admin", label: "Admin" },

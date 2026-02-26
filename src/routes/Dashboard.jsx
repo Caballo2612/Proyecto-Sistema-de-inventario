@@ -1,118 +1,27 @@
-import React from 'react'
-
-const SvgIcon = ({ icon }) => {
-    switch (icon) {
-        case 'compras':
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="50"
-                    height="50"
-                    fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke="#fff" strokeWidth="1.5" d="M20.5 7v6c0 3.771 0 5.657-1.172 6.828S16.271 21 12.5 21h-1m-8-14v6c0 3.771 0 5.657 1.172 6.828.704.705 1.668.986 3.144 1.098M12 3H4c-.943 0-1.414 0-1.707.293S2 4.057 2 5s0 1.414.293 1.707S3.057 7 4 7h16c.943 0 1.414 0 1.707-.293S22 5.943 22 5s0-1.414-.293-1.707S20.943 3 20 3h-4" />
-                    <path stroke="#fff" strokeWidth="1.5" d="M12 7v9m0 0 3-3.333M12 16l-3-3.333" />
-                </svg>
-            )
-        case 'recibidos':
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="50"
-                    height="50"
-                    fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke="#fff" stroke-width="1.5" d="m5 17.5 14-14M5 7.23V17.5h10.27M3.5 22h17" />
-                </svg>
-            )
-        case 'devoluciones':
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="50"
-                    height="50"
-                    fill="#fff"
-                    viewBox="0 0 512.001 512.001">
-                    <path d="M355.477 72.795h-81.423c-10.221 0-18.507 8.286-18.507 18.507s8.286 18.507 18.507 18.507h81.423c65.898 0 119.51 53.612 119.51 119.511s-53.611 119.511-119.51 119.511H131.049v-28.585c0-19.011-20.634-30.957-37.126-21.434l-81.565 47.092c-16.465 9.506-16.492 33.348 0 42.869l81.565 47.091c16.464 9.506 37.126-2.391 37.126-21.434v-28.584h224.429c86.308 0 156.523-70.217 156.523-156.524S441.785 72.795 355.477 72.795m-224.428 37.014h60.633c10.221 0 18.507-8.286 18.507-18.507s-8.286-18.507-18.507-18.507h-60.633c-10.221 0-18.507 8.286-18.507 18.507s8.287 18.507 18.507 18.507" />
-                </svg>
-            )
-        case 'productos':
-            return (
-                <svg
-                    fill="#fff"
-                    width="50"
-                    height="50"
-                    viewBox="0 0 100 100"
-                    xmlns="http://www.w3.org/2000/svg"
-                    stroke="#fff">
-                    <g>
-                        <path d="m47.44 61.66a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3h-20.49a3.06 3.06 0 0 1 -3-2.88v-14.38a1 1 0 0 1 .91-1h24.5zm29.51 0a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3h-20.49a3.06 3.06 0 0 1 -3-2.88v-14.38a1 1 0 0 1 .91-1h24.5zm-37.36 4.23-.09.11-5.82 6.32-2.63-2.55a.77.77 0 0 0 -1-.08l-.09.08-1.09 1a.62.62 0 0 0 -.07.9l.07.08 3.73 3.54a1.56 1.56 0 0 0 1.08.45 1.43 1.43 0 0 0 1.09-.45l3.14-3.32.63-.67 3.14-3.31a.78.78 0 0 0 .06-.9l-.06-.08-1.09-1a.76.76 0 0 0 -1-.12zm29.51 0-.1.11-5.82 6.32-2.64-2.55a.75.75 0 0 0 -1-.08l-.09.08-1.09 1a.62.62 0 0 0 -.07.9l.07.08 3.73 3.54a1.54 1.54 0 0 0 1.08.45 1.43 1.43 0 0 0 1.09-.45l3.14-3.32.63-.67 3.14-3.31a.78.78 0 0 0 .06-.9l-.06-.08-1.07-1.01a.76.76 0 0 0 -1-.11zm-23.43-14.41a3 3 0 0 1 2.85 2.87v3.24a1 1 0 0 1 -.84 1h-26.68a1 1 0 0 1 -.94-.9v-3.16a3 3 0 0 1 2.69-3.05h23zm31.48 0a3 3 0 0 1 2.85 2.87v3.24a1 1 0 0 1 -.84 1h-26.73a1 1 0 0 1 -1-.9v-3.16a3 3 0 0 1 2.68-3.05h23zm-15-21.29a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3.05h-20.44a3.06 3.06 0 0 1 -3.05-2.87v-14.44a1 1 0 0 1 .9-1h24.51zm-7.85 4.22-.09.08-5.82 6.32-2.59-2.56a.76.76 0 0 0 -1-.07l-.09.07-1.08 1a.61.61 0 0 0 -.07.9l.07.08 3.72 3.53a1.56 1.56 0 0 0 1.09.45 1.43 1.43 0 0 0 1.08-.45l3.14-3.31.64-.67 3.13-3.32a.78.78 0 0 0 .06-.9l-.06-.07-1.08-1a.77.77 0 0 0 -1-.08zm7.9-14.41a3.06 3.06 0 0 1 3 2.88v3.23a1 1 0 0 1 -.91 1h-28.52a1 1 0 0 1 -1-.91v-3.14a3.06 3.06 0 0 1 2.87-3h24.56z">
-                        </path>
-                    </g>
-                </svg>
-            )
-        case 'ventas':
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    width="50"
-                    height="50"
-                    stroke="#fff"
-                    viewBox="0 0 24 24">
-                    <g stroke-width="1.5">
-                        <path d="M12 21v-9m0 0 3 3.333M12 12l-3 3.333" />
-                        <path d="M20.5 7v6c0 3.771 0 5.657-1.172 6.828S16.271 21 12.5 21h-1m-8-14v6c0 3.771 0 5.657 1.172 6.828.704.705 1.668.986 3.144 1.098M12 3H4c-.943 0-1.414 0-1.707.293S2 4.057 2 5s0 1.414.293 1.707S3.057 7 4 7h16c.943 0 1.414 0 1.707-.293S22 5.943 22 5s0-1.414-.293-1.707S20.943 3 20 3h-4" />
-                    </g>
-                </svg>
-            )
-        case 'proveedores':
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xml:space="preserve"
-                    width="50"
-                    height="50"
-                    fill="#fff"
-                    stroke="#fff"
-                    viewBox="0 0 52 52">
-                    <path d="M24.3 36.5c.7 0 1.4.1 2 .3L15.5 6.2l-1-3c-.3-.9-1.2-1.3-2-1L3.1 5.3c-.9.3-1.3 1.2-1 2l1 3c.3.9 1.2 1.3 2 1L10 9.7l9.9 28.1c1.3-.8 2.8-1.3 4.4-1.3zm16.9-7.3-9.9 3.5c-1 .4-2.2-.2-2.5-1.2l-3.5-9.9c-.4-1 .2-2.2 1.2-2.5l9.9-3.5c1-.4 2.2.2 2.5 1.2l3.5 9.9c.4 1-.2 2.1-1.2 2.5zm-9.4-16.3-6.7 2.3c-1 .4-2.2-.2-2.5-1.2l-2.3-6.7c-.4-1 .2-2.2 1.2-2.5l6.7-2.3c1-.4 2.2.2 2.5 1.2l2.3 6.7c.4.9-.1 2.1-1.2 2.5zm18.1 22.6-1-3c-.3-.9-1.2-1.3-2-1l-18.2 6.3c1.9 1.2 3.2 3.2 3.6 5.5L49 37.6c.8-.3 1.2-1.2.9-2.1zm-25.6 3.6c-3 0-5.5 2.5-5.5 5.5s2.5 5.5 5.5 5.5 5.5-2.5 5.5-5.5c0-3.1-2.5-5.5-5.5-5.5z" />
-                </svg>
-            )
-        case 'usuarios':
-            return (
-                <svg
-                    width="50"
-                    height="50"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    stroke="#fff">
-                    <path d="M17 20C17 18.3431 14.7614 17 12 17C9.23858 17 7 18.3431 7 20M21 17.0004C21 15.7702 19.7659 14.7129 18 14.25M3 17.0004C3 15.7702 4.2341 14.7129 6 14.25M18 10.2361C18.6137 9.68679 19 8.8885 19 8C19 6.34315 17.6569 5 16 5C15.2316 5 14.5308 5.28885 14 5.76389M6 10.2361C5.38625 9.68679 5 8.8885 5 8C5 6.34315 6.34315 5 8 5C8.76835 5 9.46924 5.28885 10 5.76389M12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 12.6569 13.6569 14 12 14Z" stroke="#fff" stroke-width="1.5">
-                    </path>
-                </svg>
-            )
-    }
-}
-
-const Card =
-    ({ title, id, imagen, bgImg }) => (
-        <div className="bg-gray-600 text-white p-4 rounded-md shadow-lg flex gap-4" id={id}>
-            <div className={'p-4 rounded-lg' + (bgImg ? ' ' + bgImg : ' bg-gray-500')}>
-                {SvgIcon({ icon: imagen })}
-            </div>
-            <div className="flex flex-col flex-1 justify-between">
-                <div>
-                    <h3>{title}</h3>
-                </div>
-                <p className="text-right">
-                    Numero
-                </p>
-            </div>
-        </div>
-    )
+import { useEffect, useState } from 'react'
+import { DataCard } from '../components/organisms/DataCard'
 
 export const Dashboard = () => {
+
+    const [counts, setCounts] = useState({})
+
+    useEffect(() => {
+        fetch("http://localhost:3000/api/data/count")
+            .then(res => res.json())
+            .then(data => setCounts(data))
+            .catch(err => console.log(err))
+    }, [])
+
+    const InfoCards = [
+        { imagen: 'compras', bgImg: 'bg-blue-500', title: 'Ordenes de Compra' },
+        { imagen: 'recibidos', bgImg: 'bg-green-500', title: 'Compras Recibidos' },
+        { imagen: 'devoluciones', bgImg: 'bg-yellow-500', title: 'Devoluciones' },
+        { imagen: 'productos', bgImg: 'bg-purple-500', title: 'Productos', key: 'productos' },
+        { imagen: 'ventas', bgImg: 'bg-red-500', title: 'Ventas' },
+        { imagen: 'proveedores', bgImg: 'bg-pink-500', title: 'Proveedores' },
+        { imagen: 'usuarios', bgImg: 'bg-orange-500', title: 'Usuarios', key: 'usuarios' }
+    ]
+
     return (
         <>
             <div className='px-4'>
@@ -123,47 +32,9 @@ export const Dashboard = () => {
 
             <div className='p-4'>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
-                    <Card
-                        imagen='compras'
-                        bgImg="bg-blue-500"
-                        id="Ordenes de Compra"
-                        title="Ordenes de Compra"
-                    />
-                    <Card
-                        imagen='recibidos'
-                        bgImg="bg-green-500"
-                        id="card-2"
-                        title="Compras Recibidas"
-                    />
-                    <Card
-                        bgImg="bg-yellow-500"
-                        imagen='devoluciones'
-                        id="card-3"
-                        title="Devoluciones"
-                    />
-                    <Card
-                        bgImg="bg-purple-500"
-                        imagen='productos'
-                        id="productos"
-                        title="Productos"
-                    />
-                    <Card
-                        bgImg="bg-red-500"
-                        imagen='ventas'
-                        id="ventas"
-                        title="Ventas"
-                    />
-                    <Card
-                        bgImg="bg-pink-500"
-                        imagen='proveedores'
-                        id="proveedores"
-                        title="Proveedores"
-                    />
-                    <Card
-                        bgImg="bg-orange-500"
-                        imagen='usuarios'
-                        id="usuarios"
-                        title="Usuarios"
+                    <DataCard
+                        Cards={InfoCards}
+                        Counts={counts}
                     />
                 </div>
             </div>

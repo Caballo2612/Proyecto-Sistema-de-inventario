@@ -15,4 +15,16 @@ duroRouter.get("/data", async (req, res) => {
     }
 });
 
+duroRouter.get("/data/count", async (req, res) => {
+    try {
+        const total = await DuroModel.countAll()
+        res.json(total)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: "Error al contar los datos"
+        })
+    }
+})
+
 export default duroRouter;

@@ -55,8 +55,6 @@ export const Header = ({ IsOpen, toggleMenu }) => {
                 {IsOpen.settings && (
                     <div className='absolute right-4 top-16 bg-gray-800 text-white rounded-md shadow-lg w-46 z-10 p-2 inline-block'>
 
-                        {/* Un piquito que no sé si dejar xd  <div className="absolute -top-2 right-2.5 w-4 h-5 bg-gray-800 rotate-45 -z-10"></div> */}
-
                         <div className='flex hover:bg-gray-700 p-2 cursor-pointer text-lg flex-row items-center gap-2 rounded-md'>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

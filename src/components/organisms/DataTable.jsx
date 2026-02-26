@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { PriceFormats } from '../../utils/priceFormats';
+import Input from '../molecules/Input';
 
 export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
 
@@ -105,46 +106,45 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                 >
                                                     {formData[field.name]
                                                         ? field.options.find(o => o.value === formData[field.name])?.label
-                                                        : "Seleccione..."}
+                                                        : field.label}
                                                 </button>
 
-                                                    <div className={`mt-1 w-full bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-40 border' : 'max-h-0 border-0 border-white'}`}>
-                                                        {field.options.map((option, i) => (
-                                                            <div key={i}>
-                                                                <button
-                                                                    type='button'
-                                                                    className='block w-full text-left px-3 py-2 hover:bg-gray-100 rounded-sm cursor-pointer'
-                                                                    value={option.value}
-                                                                    onClick={() => {
-                                                                        setFormData(prev => ({
-                                                                            ...prev,
-                                                                            [field.name]: option.value
-                                                                        }));
-                                                                        setIsOpen(prev => ({
-                                                                            ...prev,
-                                                                            Select: null
-                                                                        }));
-                                                                    }}
-                                                                >
-                                                                    {option.label}
-                                                                </button>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                
+                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-40 border' : 'max-h-0 border-0 border-white'}`}>
+                                                    {field.options.map((option, i) => (
+                                                        <div key={i}>
+                                                            <button
+                                                                type='button'
+                                                                className='block w-full text-left px-3 py-2 hover:bg-gray-100 rounded-sm cursor-pointer'
+                                                                value={option.value}
+                                                                onClick={() => {
+                                                                    setFormData(prev => ({
+                                                                        ...prev,
+                                                                        [field.name]: option.value
+                                                                    }));
+                                                                    setIsOpen(prev => ({
+                                                                        ...prev,
+                                                                        Select: null
+                                                                    }));
+                                                                }}
+                                                            >
+                                                                {option.label}
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
                                             </div>
                                         )
                                     }
 
                                     return (
-                                        <input
+                                        <Input
                                             key={index}
                                             type={field.type}
                                             name={field.name}
                                             placeholder={field.placeholder}
                                             value={formData[field.name] || ""}
                                             onChange={handleChange}
-                                            className='border rounded-md px-2 py-1 focus:outline-none'
                                             required={field.required}
                                         />
                                     )
@@ -236,20 +236,50 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                         <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
 
                                             <button
-                                                className="px-3 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer"
+                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center"
                                             >
-                                                Ver
+                                                <svg
+                                                    width="20"
+                                                    height="20"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <g stroke="#33363f" stroke-width="2">
+                                                        <circle cx="12" cy="12" r="3" />
+                                                        <path d="M21 12s-1-8-9-8-9 8-9 8" />
+                                                    </g>
+                                                </svg>
+                                                Ver Más
                                             </button>
 
                                             <button
-                                                className="px-3 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer"
+                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center"
                                             >
+                                                <svg
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <g fill="none" stroke="blue" stroke-width="2">
+                                                        <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
+                                                        <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
+                                                    </g>
+                                                </svg>
                                                 Editar
                                             </button>
 
                                             <button
-                                                className="px-3 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer"
+                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center"
                                             >
+                                                <svg
+                                                    width="20"
+                                                    height="20"
+                                                    fill="none"
+                                                    stroke="red"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path stroke-width="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
+                                                </svg>
                                                 Eliminar
                                             </button>
                                         </div>
