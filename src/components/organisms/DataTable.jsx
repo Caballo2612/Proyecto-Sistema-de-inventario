@@ -206,14 +206,30 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                 key={rowIndex}
                                 className="even:bg-gray-200 odd:bg-white hover:bg-gray-100 transition-colors duration-200"
                             >
-                                {columns.map((col, colIndex) => (
-                                    <td key={colIndex} className="px-3 py-2 border-none">
-                                        {col.identifier === "price"
-                                            ? PriceFormats.COP(row[col.identifier])
-                                            : row[col.identifier]
-                                        }
-                                    </td>
-                                ))}
+                                {columns.map((col, colIndex) => {
+
+                                    if (col.identifier === "estado") {
+                                        return (
+                                            <td key={colIndex} className='px-3 py-2 border-none'>
+                                                <div
+                                                    className={`${row[col.identifier] === "activo" ? 'bg-green-400' : 'bg-red-500'} inline-flex px-3 py-1 text-xs font-semibold tracking-widest rounded-md text-white text-center p-2 uppercase`}
+                                                >
+                                                    {row[col.identifier]}
+                                                </div>
+                                            </td>
+                                        )
+                                    }
+
+                                    return (
+                                        <td key={colIndex} className="px-3 py-2 border-none">
+
+                                            {col.identifier === "price"
+                                                ? PriceFormats.COP(row[col.identifier])
+                                                : row[col.identifier]
+                                            }
+                                        </td>
+                                    )
+                                })}
 
                                 <td className='px-3 py-2 relative'>
                                     <button
@@ -235,15 +251,12 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                     {IsOpenRow === rowIndex && (
                                         <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
 
-                                            <button
-                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center"
-                                            >
+                                            <button className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
                                                     fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
+                                                    viewBox="0 0 24 24">
                                                     <g stroke="#33363f" stroke-width="2">
                                                         <circle cx="12" cy="12" r="3" />
                                                         <path d="M21 12s-1-8-9-8-9 8-9 8" />
@@ -252,14 +265,11 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                 Ver Más
                                             </button>
 
-                                            <button
-                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center"
-                                            >
+                                            <button className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
-                                                    viewBox="0 0 24 24"
-                                                >
+                                                    viewBox="0 0 24 24">
                                                     <g fill="none" stroke="blue" stroke-width="2">
                                                         <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
                                                         <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
@@ -268,16 +278,13 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                 Editar
                                             </button>
 
-                                            <button
-                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center"
-                                            >
+                                            <button className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
                                                     fill="none"
                                                     stroke="red"
-                                                    viewBox="0 0 24 24"
-                                                >
+                                                    viewBox="0 0 24 24">
                                                     <path stroke-width="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
                                                 </svg>
                                                 Eliminar

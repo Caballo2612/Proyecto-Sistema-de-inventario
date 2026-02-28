@@ -18,7 +18,7 @@ export const Dashboard = () => {
         { imagen: 'devoluciones', bgImg: 'bg-yellow-500', title: 'Devoluciones' },
         { imagen: 'productos', bgImg: 'bg-purple-500', title: 'Productos', key: 'productos' },
         { imagen: 'ventas', bgImg: 'bg-red-500', title: 'Ventas' },
-        { imagen: 'proveedores', bgImg: 'bg-pink-500', title: 'Proveedores' },
+        { imagen: 'proveedores', bgImg: 'bg-pink-500', title: 'Proveedores', key: 'proveedores'},
         { imagen: 'usuarios', bgImg: 'bg-orange-500', title: 'Usuarios', key: 'usuarios' }
     ]
 

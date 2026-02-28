@@ -4,12 +4,14 @@ import { DataTables } from '../components/organisms/DataTable'
 export const Productos = () => {
 
     const [productos, setProductos] = useState([]);
+    const [providers, setProviders] = useState([])
 
     useEffect(() => {
         fetch("http://localhost:3000/api/data")
             .then(res => res.json())
             .then(data => {
                 setProductos(data.productos);
+                setProviders(data.proveedores);
             })
             .catch(err => console.log(err));
     })
@@ -29,13 +31,13 @@ export const Productos = () => {
         { type: "number", name: "stock", placeholder: "Cantidad Comprada" },
         {
             type: "select",
-            name: "tipo_documento",
+            name: "providers",
             label: "Seleccionar Proveedor",
             required: true,
-            options: [
-                { value: "ADIDAS", label: "ADIDAS" },
-                { value: "D1", label: "D1" }
-            ]
+            options: providers.map(p => ({
+                value: p.id,
+                label: p.name
+            }))
         }
     ];
 

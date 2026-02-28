@@ -5,6 +5,7 @@ import { Dashboard } from "./routes/Dashboard"
 import { Compras } from "./routes/Compras"
 import { Users } from "./routes/Users"
 import { Productos } from "./routes/Productos"
+import { Proveedores } from "./routes/Proveedores"
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path="/Compras" element={<Compras />} />
             <Route path="/Usuarios" element={<Users />} />
             <Route path="/Productos" element={<Productos />} />
+            <Route path="/Proveedores" element={<Proveedores />} />
         </Route>
     </Routes>
   )

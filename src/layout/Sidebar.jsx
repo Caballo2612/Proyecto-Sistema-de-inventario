@@ -128,7 +128,7 @@ export const Sidebar = ({ IsOpen }) => {
                 </h2>
             </div>
             <div className='flex items-center gap-1 p-3 text-lg rounded-md flex-col'>
-                <li className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                <Link to="/Proveedores" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         xml:space="preserve"
@@ -142,7 +142,7 @@ export const Sidebar = ({ IsOpen }) => {
                     <span>
                         Proveedores
                     </span>
-                </li>
+                </Link>
                 <Link to="/Productos" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
                     <svg
                         fill="#fff"
