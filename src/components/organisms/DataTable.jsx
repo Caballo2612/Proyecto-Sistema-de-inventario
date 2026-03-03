@@ -109,7 +109,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                         : field.label}
                                                 </button>
 
-                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-40 border' : 'max-h-0 border-0 border-white'}`}>
+                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-200 border' : 'max-h-0 border-white'}`}>
                                                     {field.options.map((option, i) => (
                                                         <div key={i}>
                                                             <button
@@ -132,7 +132,6 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                         </div>
                                                     ))}
                                                 </div>
-
                                             </div>
                                         )
                                     }
@@ -184,7 +183,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                 </div>
             </div>
 
-            <div className='p-5 rounded-lg overflow-hidden'>
+            <div className='p-5 rounded-lg'>
                 <table className="min-w-full border border-gray-200">
                     <thead className="">
                         <tr>
@@ -257,7 +256,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                     height="20"
                                                     fill="none"
                                                     viewBox="0 0 24 24">
-                                                    <g stroke="#33363f" stroke-width="2">
+                                                    <g stroke="#33363f" strokeWidth="2">
                                                         <circle cx="12" cy="12" r="3" />
                                                         <path d="M21 12s-1-8-9-8-9 8-9 8" />
                                                     </g>
@@ -270,7 +269,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                     width="20"
                                                     height="20"
                                                     viewBox="0 0 24 24">
-                                                    <g fill="none" stroke="blue" stroke-width="2">
+                                                    <g fill="none" stroke="blue" strokeWidth="2">
                                                         <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
                                                         <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
                                                     </g>
@@ -285,7 +284,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                     fill="none"
                                                     stroke="red"
                                                     viewBox="0 0 24 24">
-                                                    <path stroke-width="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
+                                                    <path strokeWidth="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
                                                 </svg>
                                                 Eliminar
                                             </button>

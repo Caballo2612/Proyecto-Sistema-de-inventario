@@ -1,0 +1,163 @@
+.profileCard ul button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 12px;
+    border: 0;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.profileCard li:hover {
+    border-radius: 12px;
+    background-color: #acacac57;
+}
+
+.profileCard ul li:last-child {
+    margin-top: 12px;
+    padding-top: 9px;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Extra styles for forms page */
+
+.card {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100svh;
+    background: #f9f9f9;
+    color: #2b2b2b;
+}
+
+.card-bg {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    width: 50%;
+    translate: 0 0;
+    transition: 0.65s;
+}
+
+.card-bg.signin {
+    translate: 100% 0;
+}
+
+.hero, .form {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    transition: 0.65s;
+}
+
+.form.signup {
+    left: 50%;
+}
+
+.hero.signin {
+    left: 50%;
+    translate: 100% 0;
+}
+
+.hero.signin.active {
+    translate: 0;
+}
+
+.hero.signup {
+    translate: -100% 0;
+}
+
+.hero.signup.active {
+    translate: 0;
+}
+
+.hero {
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 50%;
+    color: #f9f9f9;
+    padding: 0 24px;
+}
+
+.hero h2 {
+    font-size: 28px;
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 3px;
+}
+
+.hero button {
+    border: 0;
+    padding: 14px 0;
+    border-radius: 32px;
+    background: #f9f9f9;
+    color: #141317;
+    width: 160px;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.form.signin {
+    translate: -100% 0;
+}
+
+.form.signin.active {
+    translate: 0;
+}
+
+.form.signup {
+    translate: 100% 0;
+}
+
+.form.signup.active {
+    translate: 0;
+}
+
+.form {
+    background: inherit;
+    z-index: 1;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+    padding: 32px;
+}
+
+.form form {
+    overflow-y: auto;
+}
+
+.form h2 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 28px;
+}
+
+.form p {
+    color: #6b6b6b;
+    font-size: 12px;
+}
+
+.form button {
+    border: 0;
+    padding: 14px 0;
+    border-radius: 32px;
+    color: #f9f9f9;
+    width: 160px;
+    cursor: pointer;
+}

@@ -1,7 +1,21 @@
-import React from 'react'
+import { getAuth, signOut } from "firebase/auth";
+import appFireBase from "../credentials";
+import { useNavigate } from "react-router-dom";
 
 
-export const Header = ({ IsOpen, toggleMenu }) => {
+export const Header = ({ IsOpen, toggleMenu, usuario }) => {
+
+    const Auth = getAuth(appFireBase);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(Auth);
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className='flex-row flex z-50'>
@@ -38,7 +52,7 @@ export const Header = ({ IsOpen, toggleMenu }) => {
                         />
                     </svg>
                     <span className='text-lg'>
-                        Usuario
+                        {usuario ? usuario : 'usuario'}
                     </span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +83,7 @@ export const Header = ({ IsOpen, toggleMenu }) => {
                             </span>
                         </div>
                         <div className="border-t border-gray-700 my-1"></div>
-                        <div className='flex hover:bg-gray-700 p-2 cursor-pointer text-lg flex-row items-center gap-2 rounded-md'>
+                        <div onClick={handleLogout} className='flex hover:bg-gray-700 p-2 cursor-pointer text-lg flex-row items-center gap-2 rounded-md'>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"

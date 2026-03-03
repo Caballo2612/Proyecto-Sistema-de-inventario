@@ -12,7 +12,7 @@ export const Users = () => {
                 setUsuarios(data.usuarios);
             })
             .catch(err => console.log(err));
-    })
+    }, []);
 
     const columns = [
         { header: 'ID', identifier: 'id' },

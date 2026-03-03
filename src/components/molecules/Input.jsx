@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Input = ({ type, name, placeholder, value, onChange, required }) => {
+const Input = ({ type, name, placeholder, value, onChange, required, id }) => {
     return (
             <div className="relative">
                 <input 
                     className="w-full peer p-3 pt-4 pl-10 pr-4 border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-500 focus:border-blue-600" 
-                    type={type} 
+                    type={type}
+                    id={id} 
                     placeholder=""
                     name={name}
                     value={value}

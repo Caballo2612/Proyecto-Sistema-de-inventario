@@ -14,7 +14,7 @@ export const Productos = () => {
                 setProviders(data.proveedores);
             })
             .catch(err => console.log(err));
-    })
+    }, []);
 
     const columns = [
         { header: 'ID', identifier: 'id' },
@@ -34,7 +34,9 @@ export const Productos = () => {
             name: "providers",
             label: "Seleccionar Proveedor",
             required: true,
-            options: providers.map(p => ({
+            options: providers
+            .filter(p => p.estado === 'activo')
+            .map(p => ({
                 value: p.id,
                 label: p.name
             }))
