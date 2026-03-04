@@ -75,7 +75,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                 <>
                     <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10'>
                     </div>
-                    <div className='m-4 absolute z-200 bg-white border-t-3 border-t-blue-600 shadow-md rounded-md'>
+                    <div className='m-4 absolute w-6xl z-200 bg-white border-t-3 border-t-blue-600 shadow-md rounded-md'>
                         <div className={``}>
                             <div className='text-lg font-semibold p-4 border-b border-b-gray-300 flex items-center text-center gap-2'>
                                 <svg
@@ -88,9 +88,11 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                     viewBox="0 0 52 52">
                                     <path d="m31 25.4 13-13.1c.6-.6.6-1.5 0-2.1l-2-2.1c-.6-.6-1.5-.6-2.1 0L26.8 21.2c-.4.4-1 .4-1.4 0L12.3 8c-.6-.6-1.5-.6-2.1 0l-2.1 2.1c-.6.6-.6 1.5 0 2.1l13.1 13.1c.4.4.4 1 0 1.4L8 39.9c-.6.6-.6 1.5 0 2.1l2.1 2.1c.6.6 1.5.6 2.1 0L25.3 31c.4-.4 1-.4 1.4 0l13.1 13.1c.6.6 1.5.6 2.1 0L44 42c.6-.6.6-1.5 0-2.1L31 26.8c-.4-.4-.4-1 0-1.4z" />
                                 </svg>
-                                Nuevo
+                                <span>
+                                    Nuevo
+                                </span>
                             </div>
-                            <form className='flex flex-col gap-3 p-4 w-6xl' id='formData' onSubmit={handleSubmit}>
+                            <form className='gap-3 p-4 w-6xl' id='formData' onSubmit={handleSubmit}>
                                 {Fields.map((field, index) => {
 
                                     if (field.type === "select") {
@@ -109,7 +111,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                         : field.label}
                                                 </button>
 
-                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-200 border' : 'max-h-0 border-white'}`}>
+                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-200 border border-white' : 'max-h-0 border border-white opacity-5'}`}>
                                                     {field.options.map((option, i) => (
                                                         <div key={i}>
                                                             <button
@@ -137,15 +139,15 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                     }
 
                                     return (
-                                        <Input
-                                            key={index}
-                                            type={field.type}
-                                            name={field.name}
-                                            placeholder={field.placeholder}
-                                            value={formData[field.name] || ""}
-                                            onChange={handleChange}
-                                            required={field.required}
-                                        />
+                                            <Input
+                                                key={index}
+                                                type={field.type}
+                                                name={field.name}
+                                                placeholder={field.placeholder}
+                                                value={formData[field.name] || ""}
+                                                onChange={handleChange}
+                                                required={field.required}
+                                            />
                                     )
                                 })}
                             </form>

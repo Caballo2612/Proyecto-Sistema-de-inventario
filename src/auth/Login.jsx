@@ -6,6 +6,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import AuthForm from "../components/organisms/AuthForm";
 import Hero from "../components/organisms/Hero";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const Auth = getAuth(appFireBase)
@@ -29,13 +30,27 @@ const Login = () => {
         try {
             if (isSignup) {
                 await createUserWithEmailAndPassword(Auth, email, password);
-                setView('signin');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cuenta creada!',
+                    text: 'Tu cuenta ha sido creada correctamente!',
+                });
+                setView('signup');
             } else {
                 await signInWithEmailAndPassword(Auth, email, password);
-                navigate("/Dashboard")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Bienvenido de vuelta!',
+                    text: 'Has iniciado sesión correctamente!',
+                });
+                navigate("/Dashboard");
             }
         } catch (err) {
-            console.log(err.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: err.message,
+            });
         }
     }
 
