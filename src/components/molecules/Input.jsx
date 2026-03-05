@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ type, name, placeholder, value, onChange, required, id }) => {
+const Input = ({ type, name, placeholder, value, onChange, required, id, disabled }) => {
     return (
             <div className="relative">
                 <input 
@@ -12,6 +12,7 @@ const Input = ({ type, name, placeholder, value, onChange, required, id }) => {
                     value={value}
                     onChange={onChange}
                     required={required}
+                    disabled={disabled}
                 />
                 <label className="absolute text-gray-500 text-base duration-150 transform top-4 left-10 z-10 origin-left peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:text-blue-600 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:scale-75">
                     {placeholder}

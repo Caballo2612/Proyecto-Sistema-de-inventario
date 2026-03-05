@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { PriceFormats } from '../../utils/priceFormats';
+// import appFireBase from "../credentials";
+// import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+// import Swal from "sweetalert2";
 import Input from '../molecules/Input';
 
 export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {

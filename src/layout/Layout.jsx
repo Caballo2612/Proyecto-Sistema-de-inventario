@@ -3,7 +3,7 @@ import { Header } from './Header'
 import { Outlet } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
 
-export const Layout = ({correoUsuario}) => {
+export const Layout = ({ usuario }) => {
 
     const [IsOpen, setIsOpen] = useState({
         sidebar: true,
@@ -21,12 +21,13 @@ export const Layout = ({correoUsuario}) => {
         <div className="flex">
             <Sidebar
                 IsOpen={IsOpen}
+                usuario={usuario}
                 toggleMenu={toggleMenu}
             />
             <div className="flex flex-col flex-1">
                 <Header
                     IsOpen={IsOpen}
-                    usuario={correoUsuario}
+                    usuario={usuario}
                     toggleMenu={toggleMenu}
                 />
                 <main>

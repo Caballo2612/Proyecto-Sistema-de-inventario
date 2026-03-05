@@ -78,7 +78,7 @@ export const Header = ({ IsOpen, toggleMenu, usuario }) => {
                         />
                     </svg>
                     <span className='text-lg'>
-                        {usuario ? usuario : 'usuario'}
+                        {usuario ? usuario.nombre : 'usuario'}
                     </span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

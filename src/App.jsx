@@ -8,32 +8,57 @@ import { Productos } from "./routes/Productos"
 import { Proveedores } from "./routes/Proveedores"
 import appFireBase from "./credentials"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { doc, getDoc, getFirestore } from "firebase/firestore"
 
-const Auth = getAuth(appFireBase)
+const Auth = getAuth(appFireBase);
+const firestore = getFirestore(appFireBase);
 
 function App() {
 
   const [usuario, setUsuario] = useState(null)
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(Auth, (usuarioFireBase) => {
-      if (usuarioFireBase) {
-        setUsuario(usuarioFireBase)
-      } else {
-        setUsuario(null)
-      }
-    })
+  async function getRol(uid) {
+    const docuRef = doc(firestore, `Usuarios/${uid}`);
+    const docucifrada = await getDoc(docuRef);
 
-    return () => unsubscribe()
-  }, [])
+    const finalDocu = docucifrada.data();
+
+    return {
+      rol: finalDocu.rol,
+      nombre: finalDocu.nombre,
+    };
+  }
+
+  function setUserWithFirebaseAndRol(usuarioFirebase) {
+    getRol(usuarioFirebase.uid).then((finalDocu) => {
+      const userData = {
+        uid: usuarioFirebase.uid,
+        email: usuarioFirebase.email,
+        rol: finalDocu.rol,
+        nombre: finalDocu.nombre,
+      };
+      setUsuario(userData);
+      console.log(userData);
+    });
+  }
+  
+  onAuthStateChanged(Auth, (usuarioFirebase) => {
+    if (usuarioFirebase) {
+      if (!usuario) {
+        setUserWithFirebaseAndRol(usuarioFirebase);
+      }
+    } else {
+      setUsuario(null);
+    }
+  });
 
   return (
     <Routes>
       <Route index element={<Login />} />
       {usuario
         ?
-        <Route element={<Layout correoUsuario={usuario.email} />} >
+        <Route element={<Layout usuario={usuario} />} >
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Compras" element={<Compras />} />
           <Route path="/Usuarios" element={<Users />} />

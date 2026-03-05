@@ -2,7 +2,8 @@ import { useState } from "react";
 import Input from "../components/molecules/Input";
 import appFireBase from "../credentials";
 import '../components/stylesheets/extra.css'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import AuthForm from "../components/organisms/AuthForm";
 import Hero from "../components/organisms/Hero";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +13,8 @@ import Swal from "sweetalert2";
 const Auth = getAuth(appFireBase)
 
 const Login = () => {
-
-    const navigate = useNavigate(); // ✅ aquí
+    const firestore = getFirestore(appFireBase);
+    const navigate = useNavigate();
 
     const [view, setView] = useState('signin');
     const isSignup = view === 'signup';
@@ -29,13 +30,22 @@ const Login = () => {
 
         try {
             if (isSignup) {
-                await createUserWithEmailAndPassword(Auth, email, password);
+                const name = e.target.username.value;
+
+                const userInfo = await createUserWithEmailAndPassword(Auth, email, password);
+
+                const docuRef = doc(firestore, `Usuarios/${userInfo.user.uid}`);
+
+                await setDoc(docuRef, { nombre: name, correo: email, rol: 'usuario' });
+
+                await signOut(Auth);
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Cuenta creada!',
                     text: 'Tu cuenta ha sido creada correctamente!',
                 });
-                setView('signup');
+
             } else {
                 await signInWithEmailAndPassword(Auth, email, password);
                 Swal.fire({
@@ -105,17 +115,11 @@ const Login = () => {
                 text="Sign up and discover our exclusive offers!"
                 onSubmit={handlesubmit}
             >
-                {/* <Input type="text" name="documento" placeholder="Documento" required={true} id='documento'/>
-                <select name="tipo_documento" className="p-[14px_25px] text-[#6b6b6b] focus:border-black focus:border-2 focus:text-black bg-white rounded-[10px] border border-[#ddd] outline-none hover:cursor-pointer" defaultValue="">
-                    <option value="" disabled defaultChecked>Select document type</option>
-                    <option value="tarjeta">Tarjeta de identidad</option>
-                    <option value="cedula">Cedula de ciudadania</option>
-                </select>
-                <Input type="text" name="username" placeholder="Username" required={true} id='username' /> */}
-                <Input type="email" name="email" placeholder="Email" required={true} id='email'/>
+                <Input type="text" name="username" placeholder="Username" required={true} id='username' />
+                <Input type="email" name="email" placeholder="Email" required={true} id='email' />
                 <div className="flex flex-col gap-2 password-container">
                     <div className="flex items-center relative">
-                        <Input type={showPassword ? "text" : "password"} id='password' placeholder="Create password" required={true} onChange={(e) => setPassword(e.target.value)} />
+                        <Input type={showPassword ? "text" : "password"} id='password' name='password' placeholder="Create password" required={true} onChange={(e) => setPassword(e.target.value)} />
                         <div
                             className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
                             onClick={togglePasswordVisibility}
@@ -157,9 +161,9 @@ const Login = () => {
                 text="To keep connected with us please login with your personal info"
                 onSubmit={handlesubmit}
             >
-                <Input type="text" placeholder="Email or username" required={true} id='email' />
+                <Input type="text" placeholder="Email" required={true} name='email' id='email' />
                 <div className="flex items-center relative">
-                    <Input type={showPassword ? "text" : "password"} placeholder="Password" required={true} id='password' />
+                    <Input type={showPassword ? "text" : "password"} placeholder="Password" name='password' required={true} id='password' />
                     <span
                         className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
                         onClick={togglePasswordVisibility}
@@ -171,7 +175,7 @@ const Login = () => {
                         }
                     </span>
                 </div>
-                <a className="cursor-pointer hover:">Forgot password?</a>
+                <a className="cursor-pointer">Forgot password?</a>
                 <button className="bg-blue-500">Sign In</button>
             </AuthForm>
         </div>

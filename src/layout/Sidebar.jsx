@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const Sidebar = ({ IsOpen }) => {
+export const Sidebar = ({ IsOpen, usuario }) => {
     return (
         <div className={`inset-0 z-20 bg-gray-800 min-h-svh h-full shadow-2xl text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
             <div className='p-2 bg-blue-600 text-lg flex flex-row h-13 items-center uppercase gap-2'>
@@ -122,6 +122,9 @@ export const Sidebar = ({ IsOpen }) => {
                     </span>
                 </li>
             </div>
+            {usuario.rol === 'Admin' 
+                && <div />
+            }
             <div className='text-lg px-3'>
                 <h2 className=''>
                     Mantenimiento
