@@ -1,16 +1,35 @@
 import { useEffect, useState } from 'react'
 import { DataCard } from '../components/organisms/DataCard'
+import { collection, getCountFromServer  } from 'firebase/firestore'
 
-export const Dashboard = () => {
+export const Dashboard = ({ firestore }) => {
 
     const [counts, setCounts] = useState({})
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/data/count")
-            .then(res => res.json())
-            .then(data => setCounts(data))
-            .catch(err => console.log(err))
-    }, [])
+        async function getCounts() {
+            try {
+                const res = await fetch("http://localhost:3000/api/data/count");
+                const dataSql = await res.json();
+
+                const coll = collection(firestore, 'Usuarios');
+                const query = await getCountFromServer(coll);
+
+                const totalUsuarios = query.data().count;
+
+                setCounts({
+                    ...dataSql,
+                    usuarios: totalUsuarios
+                });
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        getCounts();
+
+    }, [firestore])
 
     const InfoCards = [
         { imagen: 'compras', bgImg: 'bg-blue-500', title: 'Ordenes de Compra' },

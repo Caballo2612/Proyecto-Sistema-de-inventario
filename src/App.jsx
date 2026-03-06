@@ -39,10 +39,9 @@ function App() {
         nombre: finalDocu.nombre,
       };
       setUsuario(userData);
-      console.log(userData);
     });
   }
-  
+
   onAuthStateChanged(Auth, (usuarioFirebase) => {
     if (usuarioFirebase) {
       if (!usuario) {
@@ -55,18 +54,17 @@ function App() {
 
   return (
     <Routes>
-      <Route index element={<Login />} />
       {usuario
         ?
         <Route element={<Layout usuario={usuario} />} >
-          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard firestore={firestore} />} />
           <Route path="/Compras" element={<Compras />} />
-          <Route path="/Usuarios" element={<Users />} />
+          <Route path="/Usuarios" element={<Users firestore={firestore} />} />
           <Route path="/Productos" element={<Productos />} />
           <Route path="/Proveedores" element={<Proveedores />} />
         </Route>
         :
-        <Route index element={<Login />} />
+        <Route path="*" element={<Login />} />
       }
     </Routes>
   )

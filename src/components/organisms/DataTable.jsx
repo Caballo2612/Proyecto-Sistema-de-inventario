@@ -216,7 +216,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                         return (
                                             <td key={colIndex} className='px-3 py-2 border-none'>
                                                 <div
-                                                    className={`${row[col.identifier] === "activo" ? 'bg-green-400' : 'bg-red-500'} inline-flex px-3 py-1 text-xs font-semibold tracking-widest rounded-md text-white text-center p-2 uppercase`}
+                                                    className={`${row[col.identifier] === "activo" ? 'bg-green-500' : 'bg-red-500'} inline-flex px-3 py-1 text-xs font-semibold tracking-widest rounded-md text-white text-center p-2 uppercase`}
                                                 >
                                                     {row[col.identifier]}
                                                 </div>

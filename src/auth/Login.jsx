@@ -53,7 +53,7 @@ const Login = () => {
                     title: 'Bienvenido de vuelta!',
                     text: 'Has iniciado sesión correctamente!',
                 });
-                navigate("/Dashboard");
+                navigate("/");
             }
         } catch (err) {
             Swal.fire({

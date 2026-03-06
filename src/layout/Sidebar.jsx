@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const Sidebar = ({ IsOpen, usuario }) => {
     return (
-        <div className={`inset-0 z-20 bg-gray-800 min-h-svh h-full shadow-2xl text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
+        <div className={`inset-0 z-20 bg-gray-800 min-h-svh h-full shadow-md text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
             <div className='p-2 bg-blue-600 text-lg flex flex-row h-13 items-center uppercase gap-2'>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ export const Sidebar = ({ IsOpen, usuario }) => {
                 </h2>
             </div>
             <div className='flex items-center gap-1 p-3 text-lg rounded-md flex-col'>
-                <Link to="/dashboard" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                <Link to="/" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="27"
@@ -122,78 +122,81 @@ export const Sidebar = ({ IsOpen, usuario }) => {
                     </span>
                 </li>
             </div>
-            {usuario.rol === 'Admin' 
-                && <div />
+            {usuario.rol === 'Admin'
+                &&
+                <div>
+
+                    <div className='text-lg px-3'>
+                        <h2 className=''>
+                            Mantenimiento
+                        </h2>
+                    </div>
+                    <div className='flex items-center gap-1 p-3 text-lg rounded-md flex-col'>
+                        <Link to="/Proveedores" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlSpace="preserve"
+                                width="24"
+                                height="24"
+                                fill="#fff"
+                                stroke="#fff"
+                                viewBox="0 0 52 52">
+                                <path d="M24.3 36.5c.7 0 1.4.1 2 .3L15.5 6.2l-1-3c-.3-.9-1.2-1.3-2-1L3.1 5.3c-.9.3-1.3 1.2-1 2l1 3c.3.9 1.2 1.3 2 1L10 9.7l9.9 28.1c1.3-.8 2.8-1.3 4.4-1.3zm16.9-7.3-9.9 3.5c-1 .4-2.2-.2-2.5-1.2l-3.5-9.9c-.4-1 .2-2.2 1.2-2.5l9.9-3.5c1-.4 2.2.2 2.5 1.2l3.5 9.9c.4 1-.2 2.1-1.2 2.5zm-9.4-16.3-6.7 2.3c-1 .4-2.2-.2-2.5-1.2l-2.3-6.7c-.4-1 .2-2.2 1.2-2.5l6.7-2.3c1-.4 2.2.2 2.5 1.2l2.3 6.7c.4.9-.1 2.1-1.2 2.5zm18.1 22.6-1-3c-.3-.9-1.2-1.3-2-1l-18.2 6.3c1.9 1.2 3.2 3.2 3.6 5.5L49 37.6c.8-.3 1.2-1.2.9-2.1zm-25.6 3.6c-3 0-5.5 2.5-5.5 5.5s2.5 5.5 5.5 5.5 5.5-2.5 5.5-5.5c0-3.1-2.5-5.5-5.5-5.5z" />
+                            </svg>
+                            <span>
+                                Proveedores
+                            </span>
+                        </Link>
+                        <Link to="/Productos" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                            <svg
+                                fill="#fff"
+                                width="27"
+                                height="27"
+                                viewBox="0 0 100 100"
+                                xmlns="http://www.w3.org/2000/svg"
+                                stroke="#fff">
+                                <g>
+                                    <path d="m47.44 61.66a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3h-20.49a3.06 3.06 0 0 1 -3-2.88v-14.38a1 1 0 0 1 .91-1h24.5zm29.51 0a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3h-20.49a3.06 3.06 0 0 1 -3-2.88v-14.38a1 1 0 0 1 .91-1h24.5zm-37.36 4.23-.09.11-5.82 6.32-2.63-2.55a.77.77 0 0 0 -1-.08l-.09.08-1.09 1a.62.62 0 0 0 -.07.9l.07.08 3.73 3.54a1.56 1.56 0 0 0 1.08.45 1.43 1.43 0 0 0 1.09-.45l3.14-3.32.63-.67 3.14-3.31a.78.78 0 0 0 .06-.9l-.06-.08-1.09-1a.76.76 0 0 0 -1-.12zm29.51 0-.1.11-5.82 6.32-2.64-2.55a.75.75 0 0 0 -1-.08l-.09.08-1.09 1a.62.62 0 0 0 -.07.9l.07.08 3.73 3.54a1.54 1.54 0 0 0 1.08.45 1.43 1.43 0 0 0 1.09-.45l3.14-3.32.63-.67 3.14-3.31a.78.78 0 0 0 .06-.9l-.06-.08-1.07-1.01a.76.76 0 0 0 -1-.11zm-23.43-14.41a3 3 0 0 1 2.85 2.87v3.24a1 1 0 0 1 -.84 1h-26.68a1 1 0 0 1 -.94-.9v-3.16a3 3 0 0 1 2.69-3.05h23zm31.48 0a3 3 0 0 1 2.85 2.87v3.24a1 1 0 0 1 -.84 1h-26.73a1 1 0 0 1 -1-.9v-3.16a3 3 0 0 1 2.68-3.05h23zm-15-21.29a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3.05h-20.44a3.06 3.06 0 0 1 -3.05-2.87v-14.44a1 1 0 0 1 .9-1h24.51zm-7.85 4.22-.09.08-5.82 6.32-2.59-2.56a.76.76 0 0 0 -1-.07l-.09.07-1.08 1a.61.61 0 0 0 -.07.9l.07.08 3.72 3.53a1.56 1.56 0 0 0 1.09.45 1.43 1.43 0 0 0 1.08-.45l3.14-3.31.64-.67 3.13-3.32a.78.78 0 0 0 .06-.9l-.06-.07-1.08-1a.77.77 0 0 0 -1-.08zm7.9-14.41a3.06 3.06 0 0 1 3 2.88v3.23a1 1 0 0 1 -.91 1h-28.52a1 1 0 0 1 -1-.91v-3.14a3.06 3.06 0 0 1 2.87-3h24.56z">
+                                    </path>
+                                </g>
+                            </svg>
+                            <span>
+                                Productos
+                            </span>
+                        </Link>
+                        <Link to="/Usuarios" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                stroke="#fff">
+                                <path d="M17 20C17 18.3431 14.7614 17 12 17C9.23858 17 7 18.3431 7 20M21 17.0004C21 15.7702 19.7659 14.7129 18 14.25M3 17.0004C3 15.7702 4.2341 14.7129 6 14.25M18 10.2361C18.6137 9.68679 19 8.8885 19 8C19 6.34315 17.6569 5 16 5C15.2316 5 14.5308 5.28885 14 5.76389M6 10.2361C5.38625 9.68679 5 8.8885 5 8C5 6.34315 6.34315 5 8 5C8.76835 5 9.46924 5.28885 10 5.76389M12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 12.6569 13.6569 14 12 14Z" stroke="#fff" strokeWidth="1.5">
+                                </path>
+                            </svg>
+                            <span>
+                                Usuarios
+                            </span>
+                        </Link>
+                        <li className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="#fff"
+                                stroke="#fff"
+                                viewBox="0 0 24 24">
+                                <path d="M7 3H5v6h2zm12 0h-2v10h2zM3 13h2v8h2v-8h2v-2H3zm12-6h-2V3h-2v4H9v2h6zm-4 14h2V11h-2zm4-6v2h2v4h2v-4h2v-2z" />
+                                <path d="M7 3H5v6h2zm12 0h-2v10h2zM3 13h2v8h2v-8h2v-2H3zm12-6h-2V3h-2v4H9v2h6zm-4 14h2V11h-2zm4-6v2h2v4h2v-4h2v-2z" />
+                            </svg>
+                            <span>
+                                Configuracion
+                            </span>
+                        </li>
+                    </div>
+                </div>
             }
-            <div className='text-lg px-3'>
-                <h2 className=''>
-                    Mantenimiento
-                </h2>
-            </div>
-            <div className='flex items-center gap-1 p-3 text-lg rounded-md flex-col'>
-                <Link to="/Proveedores" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlSpace="preserve"
-                        width="24"
-                        height="24"
-                        fill="#fff"
-                        stroke="#fff"
-                        viewBox="0 0 52 52">
-                        <path d="M24.3 36.5c.7 0 1.4.1 2 .3L15.5 6.2l-1-3c-.3-.9-1.2-1.3-2-1L3.1 5.3c-.9.3-1.3 1.2-1 2l1 3c.3.9 1.2 1.3 2 1L10 9.7l9.9 28.1c1.3-.8 2.8-1.3 4.4-1.3zm16.9-7.3-9.9 3.5c-1 .4-2.2-.2-2.5-1.2l-3.5-9.9c-.4-1 .2-2.2 1.2-2.5l9.9-3.5c1-.4 2.2.2 2.5 1.2l3.5 9.9c.4 1-.2 2.1-1.2 2.5zm-9.4-16.3-6.7 2.3c-1 .4-2.2-.2-2.5-1.2l-2.3-6.7c-.4-1 .2-2.2 1.2-2.5l6.7-2.3c1-.4 2.2.2 2.5 1.2l2.3 6.7c.4.9-.1 2.1-1.2 2.5zm18.1 22.6-1-3c-.3-.9-1.2-1.3-2-1l-18.2 6.3c1.9 1.2 3.2 3.2 3.6 5.5L49 37.6c.8-.3 1.2-1.2.9-2.1zm-25.6 3.6c-3 0-5.5 2.5-5.5 5.5s2.5 5.5 5.5 5.5 5.5-2.5 5.5-5.5c0-3.1-2.5-5.5-5.5-5.5z" />
-                    </svg>
-                    <span>
-                        Proveedores
-                    </span>
-                </Link>
-                <Link to="/Productos" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
-                    <svg
-                        fill="#fff"
-                        width="27"
-                        height="27"
-                        viewBox="0 0 100 100"
-                        xmlns="http://www.w3.org/2000/svg"
-                        stroke="#fff">
-                        <g>
-                            <path d="m47.44 61.66a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3h-20.49a3.06 3.06 0 0 1 -3-2.88v-14.38a1 1 0 0 1 .91-1h24.5zm29.51 0a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3h-20.49a3.06 3.06 0 0 1 -3-2.88v-14.38a1 1 0 0 1 .91-1h24.5zm-37.36 4.23-.09.11-5.82 6.32-2.63-2.55a.77.77 0 0 0 -1-.08l-.09.08-1.09 1a.62.62 0 0 0 -.07.9l.07.08 3.73 3.54a1.56 1.56 0 0 0 1.08.45 1.43 1.43 0 0 0 1.09-.45l3.14-3.32.63-.67 3.14-3.31a.78.78 0 0 0 .06-.9l-.06-.08-1.09-1a.76.76 0 0 0 -1-.12zm29.51 0-.1.11-5.82 6.32-2.64-2.55a.75.75 0 0 0 -1-.08l-.09.08-1.09 1a.62.62 0 0 0 -.07.9l.07.08 3.73 3.54a1.54 1.54 0 0 0 1.08.45 1.43 1.43 0 0 0 1.09-.45l3.14-3.32.63-.67 3.14-3.31a.78.78 0 0 0 .06-.9l-.06-.08-1.07-1.01a.76.76 0 0 0 -1-.11zm-23.43-14.41a3 3 0 0 1 2.85 2.87v3.24a1 1 0 0 1 -.84 1h-26.68a1 1 0 0 1 -.94-.9v-3.16a3 3 0 0 1 2.69-3.05h23zm31.48 0a3 3 0 0 1 2.85 2.87v3.24a1 1 0 0 1 -.84 1h-26.73a1 1 0 0 1 -1-.9v-3.16a3 3 0 0 1 2.68-3.05h23zm-15-21.29a1 1 0 0 1 1 .91v14.37a3.06 3.06 0 0 1 -2.87 3.05h-20.44a3.06 3.06 0 0 1 -3.05-2.87v-14.44a1 1 0 0 1 .9-1h24.51zm-7.85 4.22-.09.08-5.82 6.32-2.59-2.56a.76.76 0 0 0 -1-.07l-.09.07-1.08 1a.61.61 0 0 0 -.07.9l.07.08 3.72 3.53a1.56 1.56 0 0 0 1.09.45 1.43 1.43 0 0 0 1.08-.45l3.14-3.31.64-.67 3.13-3.32a.78.78 0 0 0 .06-.9l-.06-.07-1.08-1a.77.77 0 0 0 -1-.08zm7.9-14.41a3.06 3.06 0 0 1 3 2.88v3.23a1 1 0 0 1 -.91 1h-28.52a1 1 0 0 1 -1-.91v-3.14a3.06 3.06 0 0 1 2.87-3h24.56z">
-                            </path>
-                        </g>
-                    </svg>
-                    <span>
-                        Productos
-                    </span>
-                </Link>
-                <Link to="/Usuarios" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        stroke="#fff">
-                        <path d="M17 20C17 18.3431 14.7614 17 12 17C9.23858 17 7 18.3431 7 20M21 17.0004C21 15.7702 19.7659 14.7129 18 14.25M3 17.0004C3 15.7702 4.2341 14.7129 6 14.25M18 10.2361C18.6137 9.68679 19 8.8885 19 8C19 6.34315 17.6569 5 16 5C15.2316 5 14.5308 5.28885 14 5.76389M6 10.2361C5.38625 9.68679 5 8.8885 5 8C5 6.34315 6.34315 5 8 5C8.76835 5 9.46924 5.28885 10 5.76389M12 14C10.3431 14 9 12.6569 9 11C9 9.34315 10.3431 8 12 8C13.6569 8 15 9.34315 15 11C15 12.6569 13.6569 14 12 14Z" stroke="#fff" strokeWidth="1.5">
-                        </path>
-                    </svg>
-                    <span>
-                        Usuarios
-                    </span>
-                </Link>
-                <li className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="#fff"
-                        stroke="#fff"
-                        viewBox="0 0 24 24">
-                        <path d="M7 3H5v6h2zm12 0h-2v10h2zM3 13h2v8h2v-8h2v-2H3zm12-6h-2V3h-2v4H9v2h6zm-4 14h2V11h-2zm4-6v2h2v4h2v-4h2v-2z" />
-                        <path d="M7 3H5v6h2zm12 0h-2v10h2zM3 13h2v8h2v-8h2v-2H3zm12-6h-2V3h-2v4H9v2h6zm-4 14h2V11h-2zm4-6v2h2v4h2v-4h2v-2z" />
-                    </svg>
-                    <span>
-                        Configuracion
-                    </span>
-                </li>
-            </div>
         </div>
     )
 }
