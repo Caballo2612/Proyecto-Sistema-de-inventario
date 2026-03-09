@@ -1,27 +1,3 @@
-.profileCard ul button {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 12px;
-    border: 0;
-    border-radius: 8px;
-    transition: 0.3s;
-    cursor: pointer;
-    transition: .5s;
-}
-
-.profileCard li:hover {
-    border-radius: 12px;
-    background-color: #acacac57;
-}
-
-.profileCard ul li:last-child {
-    margin-top: 12px;
-    padding-top: 9px;
-    border-top: 1px solid #e0e0e0;
-}
-
 /* Extra styles for forms page */
 
 .card {
@@ -38,12 +14,8 @@
     z-index: 2;
     inset: 0;
     width: 50%;
-    translate: 0 0;
+    translate: 100%;
     transition: 0.65s;
-}
-
-.card-bg.signin {
-    translate: 100% 0;
 }
 
 .hero, .form {
@@ -53,24 +25,12 @@
     transition: 0.65s;
 }
 
-.form.signup {
-    left: 50%;
-}
-
 .hero.signin {
     left: 50%;
     translate: 100% 0;
 }
 
 .hero.signin.active {
-    translate: 0;
-}
-
-.hero.signup {
-    translate: -100% 0;
-}
-
-.hero.signup.active {
     translate: 0;
 }
 
@@ -109,22 +69,6 @@ form {
     align-items: center;
     gap: 12px;
     width: 100%;
-}
-
-.form.signin {
-    translate: -100% 0;
-}
-
-.form.signin.active {
-    translate: 0;
-}
-
-.form.signup {
-    translate: 100% 0;
-}
-
-.form.signup.active {
-    translate: 0;
 }
 
 .form {

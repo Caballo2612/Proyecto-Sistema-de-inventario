@@ -1,13 +1,15 @@
 import React from 'react'
 
-const AuthForm = ({ type, active, title, children, text, id, onSubmit }) => {
+const AuthForm = ({ title, children, text, id, onSubmit }) => {
     return (
         <div
-            className={`form ${type} ${active ? 'active' : ''} `}
+            className={`form active`}
         >
-            <h2>{title}</h2>
+            <h2 className=''>{title}</h2>
             <p>{text}</p>
-            <form id={id} onSubmit={onSubmit}>{children}</form>
+            <form id={id} onSubmit={onSubmit} className='overflow-x-hidden'>
+                {children}    
+            </form>
         </div>
     )
 }

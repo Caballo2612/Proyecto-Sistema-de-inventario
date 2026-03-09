@@ -57,7 +57,7 @@ function App() {
       {usuario
         ?
         <Route element={<Layout usuario={usuario} />} >
-          <Route path="/" element={<Dashboard firestore={firestore} />} />
+          <Route path="/" element={<Dashboard firestore={firestore} usuario={usuario} />} />
           <Route path="/Compras" element={<Compras />} />
           <Route path="/Usuarios" element={<Users firestore={firestore} />} />
           <Route path="/Productos" element={<Productos />} />
