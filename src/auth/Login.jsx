@@ -20,7 +20,7 @@ const Login = () => {
 
         try {
             await signInWithEmailAndPassword(Auth, email, password);
-            Swal.fire({
+            await Swal.fire({
                 icon: 'success',
                 title: 'Bienvenido de vuelta!',
                 text: 'Has iniciado sesión correctamente!',

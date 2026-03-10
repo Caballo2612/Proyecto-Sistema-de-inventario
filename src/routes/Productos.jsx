@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { DataTables } from '../components/organisms/DataTable'
-import { collection, getDocs, doc, setDoc, onSnapshot, query } from 'firebase/firestore';
+import { collection, getDocs, doc, setDoc, onSnapshot, query, deleteDoc, updateDoc } from 'firebase/firestore';
 import Swal from "sweetalert2";
 
 export const Productos = ({ firestore }) => {
@@ -73,14 +73,14 @@ export const Productos = ({ firestore }) => {
                 producto
             );
 
-            Swal.fire({
+            await Swal.fire({
                 icon: 'success',
-                title: 'Cuenta creada!',
-                text: `El Usuario ${formData.nombre} fue creado con exito!`,
+                title: 'Producto Añadido!',
+                text: `El Producto ${nombre} fue creado con exito!`,
                 timerProgressBar: true,
                 showConfirmButton: false,
                 toast: true,
-                timer: 2000,
+                timer: 3000,
                 position: 'top-end',
             });
 
@@ -94,6 +94,75 @@ export const Productos = ({ firestore }) => {
         }
     };
 
+    const onDeleteProduct = async (id, nombre) => {
+        try {
+            const result = await Swal.fire({
+                icon: 'warning',
+                title: `Estas seguro de eliminar a ${nombre}?`,
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si estoy seguro!"
+            })
+
+            if (result.isConfirmed) {
+                await deleteDoc(doc(firestore, "Productos", id));
+
+                await Swal.fire({
+                    title: 'Producto eliminado!',
+                    text: 'El producto ha sido eliminado con exito',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000,
+                    toast: true,
+                    position: 'bottom-end'
+                })
+            }
+
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al eliminar',
+                text: err.message,
+            })
+        }
+    };
+
+    const onUpdateProduct = async (id, formData) => {
+        try {
+            const { descripcion, precio, stock } = formData;
+
+            const updateProducto = {
+                descripcion: descripcion,
+                precio: Number(precio),
+                stock: Number(stock),
+            };
+
+            await updateDoc(
+                doc(firestore, "Productos", id), updateProducto
+            )
+
+            await Swal.fire({
+                title: 'Producto Actualizado!',
+                text: 'El producto ha sido actualizado con exito',
+                icon: 'success',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000,
+                toast: true,
+                position: 'bottom-end'
+            })
+
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al actualizar datos',
+                text: err.message,
+            })
+        }
+    }
+
     const columns = [
         { header: 'SKU', identifier: 'sku' },
         { header: 'Nombre', identifier: 'nombre' },
@@ -104,7 +173,7 @@ export const Productos = ({ firestore }) => {
     ];
 
     const Fields = [
-        { type: "text", name: "nombre", placeholder: "Nombre Del Producto", required: true },
+        { type: "text", name: "nombre", placeholder: "Nombre Del Producto", required: true, disableOnEdit: true },
         { type: "text", name: "descripcion", placeholder: "Descripcion Del Producto", required: true },
         { type: "number", name: "precio", placeholder: "Precio Del Producto", required: true },
         { type: "number", name: "stock", placeholder: "Cantidad Comprada" },
@@ -129,6 +198,8 @@ export const Productos = ({ firestore }) => {
             Title="Lista de Productos"
             Fields={Fields}
             onSubmit={addProducto}
+            onDelete={onDeleteProduct}
+            onEdit={onUpdateProduct}
         />
     )
 }

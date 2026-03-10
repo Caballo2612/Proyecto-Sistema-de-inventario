@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { DataTables } from '../components/organisms/DataTable'
-import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
+import { collection, doc, setDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import appFireBase from "../credentials";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
@@ -42,7 +42,7 @@ export const Users = ({ firestore }) => {
                 rol: user_type
             });
             await signOut(secondaryAuth);
-            Swal.fire({
+            await Swal.fire({
                 icon: 'success',
                 title: 'Cuenta creada!',
                 text: `El Usuario ${nombre} fue creado con exito!`,
@@ -61,6 +61,41 @@ export const Users = ({ firestore }) => {
         }
     };
 
+    const onDeleteUser = async (id, nombre) => {
+        try {
+            const result = await Swal.fire({
+                icon: 'warning',
+                title: `Estas seguro de eliminar a ${nombre}?`,
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si estoy seguro!"
+            })
+
+            if (result.isConfirmed) {
+                await deleteDoc(doc(firestore, "Usuarios", id));
+
+                await Swal.fire({
+                    title: 'Usuario eliminado!',
+                    text: 'El Usuario ha sido eliminado con exito',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000,
+                    toast: true,
+                    position: 'top-end'
+                });
+            }
+
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al eliminar',
+                text: err.message,
+            })
+        }
+    };
+
     const columns = [
         { header: 'ID', identifier: 'id' },
         { header: 'Nombre', identifier: 'nombre' },
@@ -70,8 +105,8 @@ export const Users = ({ firestore }) => {
 
     const Fields = [
         { type: "text", name: "nombre", placeholder: "Nombre", required: true },
-        { type: "email", name: "email", placeholder: "Email", required: true },
-        { type: "password", name: "password", placeholder: "Contraseña", rules: true },
+        { type: "email", name: "email", placeholder: "Email", required: true, disableOnEdit: true },
+        { type: "password", name: "password", placeholder: "Contraseña", rules: true, disableOnEdit: true },
         {
             type: "select",
             name: "user_type",
@@ -91,6 +126,7 @@ export const Users = ({ firestore }) => {
             Title="Lista de Usuarios"
             Fields={Fields}
             onSubmit={handleSubmit}
+            onDelete={onDeleteUser}
         />
     )
 }

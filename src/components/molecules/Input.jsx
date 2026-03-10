@@ -40,6 +40,7 @@ const Input = ({ type, name, placeholder, value, onChange, required, id, disable
                         name={name}
                         placeholder=""
                         required={required}
+                        disabled={disabled}
                         onChange={(e) => {
                             setPassword(e.target.value);
                             onChange && onChange(e);
@@ -62,7 +63,7 @@ const Input = ({ type, name, placeholder, value, onChange, required, id, disable
                         <path d="M170.5 192q-35.5 0-60.5-25t-25-60.5T110 46t60.5-25T231 46t25 60.5t-25 60.5t-60.5 25zm0 43q31.5 0 69.5 9t69.5 29.5T341 320v43H0v-43q0-26 31.5-46.5T101 244t69.5-9z" fill="#6b7280" />
                     </svg>
                 </div>
-                {showRules &&
+                {showRules && !disabled &&
                     <div className="flex flex-col p-2 gap-1 bg-white border border-gray-300 rounded">
                         {rules.map((rule, i) => (
                             <span

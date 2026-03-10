@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { PriceFormats } from '../../utils/priceFormats';
 import Input from '../molecules/Input';
 
-export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onDelete, onView }) => {
+export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, onEdit }) => {
 
     const [IsOpenRow, setIsOpenRow] = useState(null);
+    const [editId, setEditId] = useState(null);
 
     const [IsOpen, setIsOpen] = useState({
         Form: false,
-        Select: null
+        Select: null,
+        View: null,
     });
+    const [viewData, setViewData] = useState(null);
 
     const toggleSelect = (fieldName) => {
         setIsOpen(prev => ({
@@ -37,13 +40,45 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (onSubmit) onSubmit(formData);
+        if (editId) {
+            onEdit(editId, formData);
+        } else {
+            onSubmit(formData);
+        }
         setIsOpen(prev => ({
             ...prev,
             Form: false
         }));
         setFormData({});
+        setEditId(null)
     }
+
+    const [search, setSearch] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    const filteredData = useMemo(() => {
+        if (!search) return data;
+
+        return data.filter(row =>
+            Object.values(row).some(value =>
+                String(value).toLowerCase().includes(search.toLowerCase())
+            )
+        );
+
+    }, [data, search]);
+
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+
+    const paginatedData = useMemo(() => {
+
+        if (rowsPerPage === "Full") return filteredData;
+
+        return filteredData.slice(startIndex, endIndex);
+
+    }, [filteredData, startIndex, endIndex, rowsPerPage]);
 
     return (
         <div className='m-4 bg-white border-t-3 border-2 border-gray-200 border-t-blue-500 rounded-md'>
@@ -53,7 +88,11 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                 </h2>
                 {Fields && (
                     <button
-                        onClick={() => toggleMenu('Form')}
+                        onClick={() => {
+                            setEditId(null);
+                            setFormData({});
+                            toggleMenu('Form');
+                        }}
                         className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center gap-1'
                     >
                         <svg
@@ -66,7 +105,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                             viewBox="0 0 52 52">
                             <path d="m31 25.4 13-13.1c.6-.6.6-1.5 0-2.1l-2-2.1c-.6-.6-1.5-.6-2.1 0L26.8 21.2c-.4.4-1 .4-1.4 0L12.3 8c-.6-.6-1.5-.6-2.1 0l-2.1 2.1c-.6.6-.6 1.5 0 2.1l13.1 13.1c.4.4.4 1 0 1.4L8 39.9c-.6.6-.6 1.5 0 2.1l2.1 2.1c.6.6 1.5.6 2.1 0L25.3 31c.4-.4 1-.4 1.4 0l13.1 13.1c.6.6 1.5.6 2.1 0L44 42c.6-.6.6-1.5 0-2.1L31 26.8c-.4-.4-.4-1 0-1.4z" />
                         </svg>
-                        Nuevo
+                        {editId ? "Editar" : "Nuevo"}
                     </button>
                 )}
             </div>
@@ -148,10 +187,12 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                                             onChange={handleChange}
                                             required={field.required}
                                             showRules={field.rules}
+                                            disabled={editId && field.disableOnEdit}
                                         />
                                     )
                                 })}
                             </form>
+
                             <div className='flex justify-end p-3 border border-gray-200 gap-2'>
                                 <button type='submit' form='formData' className='bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-500 transition-colors duration-200'>Guardar</button>
                                 <button type='button' className='text-white px-4 py-2 rounded-sm bg-gray-500 hover:bg-gray-400 transition-colors duration-200' onClick={() => toggleMenu("Form")}>Cancelar</button>
@@ -162,11 +203,74 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
             )
             }
 
+            {IsOpen.View && viewData && (
+                <>
+                    <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10'></div>
+
+                    <div className='m-4 absolute w-6xl z-200 bg-white border-t-3 border-t-blue-600 shadow-md rounded-md'>
+
+                        <div className='text-lg p-4 border-b border-gray-300'>
+                            Detalles
+                        </div>
+
+                        <div className='p-4 grid grid-cols-2 gap-4'>
+
+                            {Object.entries(viewData).map(([key, value], index) => {
+                                if (key === "createdAt") {
+                                    value = value?.toDate().toLocaleDateString();
+                                }
+
+                                if (key === "precio") {
+                                    value = PriceFormats.COP(value);
+                                }
+
+                                return (
+                                    <div key={index} className='flex flex-col'>
+                                        <span className='text-gray-500 text-sm capitalize'>
+                                            {key}
+                                        </span>
+
+                                        <span>
+                                            {value}
+                                        </span>
+                                    </div>
+                                )
+                            })}
+
+                        </div>
+
+                        <div className='flex justify-end p-3 border-t border-gray-200'>
+                            <button
+                                className='text-white px-4 py-2 rounded-sm bg-gray-500 hover:bg-gray-400'
+                                onClick={() =>
+                                    setIsOpen(prev => ({
+                                        ...prev,
+                                        View: false
+                                    }))
+                                }
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+
+                    </div>
+                </>
+            )}
+
             <div className='p-5 flex justify-between'>
                 <div className="flex items-center gap-2">
                     <span>Mostrar</span>
 
-                    <select className="border rounded-md px-2 py-1 bg-white focus:outline-none ">
+                    <select
+                        className="border rounded-md px-2 py-1 bg-white focus:outline-none "
+                        onChange={(e) => {
+                            const value = e.target.value === "Full"
+                                ? "Full"
+                                : Number(e.target.value);
+
+                            setRowsPerPage(value);
+                            setCurrentPage(1);
+                        }}>
                         <option>5</option>
                         <option>10</option>
                         <option>25</option>
@@ -183,6 +287,10 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                         name='search'
                         id='searchInput'
                         className="border rounded-md px-2 py-1 bg-white focus:outline-none"
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setCurrentPage(1);
+                        }}
                     />
                 </div>
             </div>
@@ -204,7 +312,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                     </thead>
 
                     <tbody className="">
-                        {data.map((row, rowIndex) => (
+                        {paginatedData.map((row, rowIndex) => (
                             <tr
                                 key={rowIndex}
                                 className="even:bg-gray-200 odd:bg-white hover:bg-gray-100 transition-colors duration-200"
@@ -266,7 +374,15 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                                     {IsOpenRow === rowIndex && (
                                         <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
 
-                                            <button onClick={onView} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button
+                                                onClick={() => {
+                                                    setViewData(row);
+                                                    setIsOpen(prev => ({
+                                                        ...prev,
+                                                        View: true
+                                                    }));
+                                                }}
+                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
@@ -280,7 +396,14 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                                                 Ver Más
                                             </button>
 
-                                            <button onClick={onEdit} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button
+                                                onClick={() => {
+                                                    setFormData(row);
+                                                    setEditId(row.id);
+                                                    toggleMenu("Form");
+                                                }}
+                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+
                                                 <svg
                                                     width="20"
                                                     height="20"
@@ -293,7 +416,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
                                                 Editar
                                             </button>
 
-                                            <button onClick={onDelete} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button onClick={() => onDelete(row.id, row.nombre)} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
@@ -316,18 +439,26 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onD
 
                 <div className='p-5 flex justify-between'>
                     <span className=''>
-                        showing 1 to 1 of 1 entries
+                        showing {startIndex + 1} to {Math.min(endIndex, filteredData.length)} of {filteredData.length} entries
                     </span>
                     <div className='flex items-center'>
-                        <button className='border border-gray-300 text-gray-400 px-2 py-1 bg-white hover:bg-gray-100 rounded-tl-sm rounded-bl-sm'>
+                        <button
+                            className='border border-gray-300 text-gray-400 px-2 py-1 bg-white hover:bg-gray-100 rounded-tl-sm rounded-bl-sm'
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(p => p - 1)}
+                        >
                             Previous
                         </button>
                         <div className='bg-blue-500 text-white px-2 py-1 border border-blue-500'>
                             <span>
-                                1
+                                {currentPage}
                             </span>
                         </div>
-                        <button className='border border-gray-300 text-gray-400 px-2 py-1 bg-white hover:bg-gray-100 rounded-tr-sm rounded-br-sm'>
+                        <button
+                            className='border border-gray-300 text-gray-400 px-2 py-1 bg-white hover:bg-gray-100 rounded-tr-sm rounded-br-sm'
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(p => p + 1)}
+                        >
                             Next
                         </button>
                     </div>
