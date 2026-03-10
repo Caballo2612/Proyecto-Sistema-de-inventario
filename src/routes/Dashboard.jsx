@@ -7,31 +7,40 @@ export const Dashboard = ({ firestore, usuario }) => {
     const [counts, setCounts] = useState({})
 
     useEffect(() => {
-        async function getCounts() {
-            try {
-                const res = await fetch("http://localhost:3000/api/data/count");
-                const dataSql = await res.json();
 
-                let totalUsuarios = 0;
-                if (usuario.rol === 'Admin') {
-                    const coll = collection(firestore, 'Usuarios');
-                    const querySnapshot = await getCountFromServer(coll);
-                    totalUsuarios = querySnapshot.data().count;
-                }
+    async function getCounts() {
 
-                setCounts({
-                    ...dataSql,
-                    usuarios: totalUsuarios
-                });
+        try {
+            const productosColl = collection(firestore, "Productos");
+            const proveedoresColl = collection(firestore, "Proveedores");
+            const productosSnap = await getCountFromServer(productosColl);
+            const proveedoresSnap = await getCountFromServer(proveedoresColl);
 
-            } catch (error) {
-                console.log(error)
+            let totalUsuarios = 0;
+
+            if (usuario.rol === "Admin") {
+
+                const usuariosColl = collection(firestore, "Usuarios");
+                const usuariosSnap = await getCountFromServer(usuariosColl);
+
+                totalUsuarios = usuariosSnap.data().count;
             }
+
+            setCounts({
+                productos: productosSnap.data().count,
+                proveedores: proveedoresSnap.data().count,
+                usuarios: totalUsuarios
+            });
+
+        } catch (error) {
+            console.error(error);
         }
 
-        getCounts();
+    }
 
-    }, [firestore, usuario])
+    getCounts();
+
+}, [firestore, usuario]);
 
     const InfoCards = [
         { imagen: 'compras', bgImg: 'bg-blue-500', title: 'Ordenes de Compra' },

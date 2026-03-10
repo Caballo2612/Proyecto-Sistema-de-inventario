@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const Sidebar = ({ IsOpen, usuario }) => {
     return (
-        <div className={`inset-0 z-20 bg-gray-800 min-h-svh h-full shadow-md text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
+        <div className={`inset-0 z-20 bg-gray-800 min-h-svh shadow-md text-white overflow-x-hidden rounded-br-lg transition-all duration-200 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
             <div className='p-2 bg-blue-600 text-lg flex flex-row h-13 items-center uppercase gap-2'>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

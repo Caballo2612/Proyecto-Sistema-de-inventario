@@ -60,8 +60,8 @@ function App() {
           <Route path="/" element={<Dashboard firestore={firestore} usuario={usuario} />} />
           <Route path="/Compras" element={<Compras />} />
           <Route path="/Usuarios" element={<Users firestore={firestore} />} />
-          <Route path="/Productos" element={<Productos />} />
-          <Route path="/Proveedores" element={<Proveedores />} />
+          <Route path="/Productos" element={<Productos firestore={firestore} />} />
+          <Route path="/Proveedores" element={<Proveedores firestore={firestore} />} />
         </Route>
         :
         <Route path="*" element={<Login />} />

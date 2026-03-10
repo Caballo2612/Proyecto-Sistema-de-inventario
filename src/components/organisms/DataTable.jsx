@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PriceFormats } from '../../utils/priceFormats';
 import Input from '../molecules/Input';
 
-export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
+export const DataTables = ({ columns, data, Title, Fields, onSubmit, onEdit, onDelete, onView }) => {
 
     const [IsOpenRow, setIsOpenRow] = useState(null);
 
@@ -111,7 +111,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                         : field.label}
                                                 </button>
 
-                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-300 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-200 border border-white' : 'max-h-0 border border-white opacity-5'}`}>
+                                                <div className={`absolute mt-1 w-auto bg-white rounded-sm shadow-md z-50 transition-[max-height] duration-400 overflow-hidden ${IsOpen.Select === field.name ? 'max-h-200 border border-black' : 'max-h-0 border border-black opacity-0'}`}>
                                                     {field.options.map((option, i) => (
                                                         <div key={i}>
                                                             <button
@@ -139,16 +139,16 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                     }
 
                                     return (
-                                            <Input
-                                                key={index}
-                                                type={field.type}
-                                                name={field.name}
-                                                placeholder={field.placeholder}
-                                                value={formData[field.name] || ""}
-                                                onChange={handleChange}
-                                                required={field.required}
-                                                showRules={field.rules}
-                                            />
+                                        <Input
+                                            key={index}
+                                            type={field.type}
+                                            name={field.name}
+                                            placeholder={field.placeholder}
+                                            value={formData[field.name] || ""}
+                                            onChange={handleChange}
+                                            required={field.required}
+                                            showRules={field.rules}
+                                        />
                                     )
                                 })}
                             </form>
@@ -167,6 +167,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                     <span>Mostrar</span>
 
                     <select className="border rounded-md px-2 py-1 bg-white focus:outline-none ">
+                        <option>5</option>
                         <option>10</option>
                         <option>25</option>
                         <option>50</option>
@@ -222,13 +223,25 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                         )
                                     }
 
+                                    if (col.identifier === "precio") {
+                                        return (
+                                            <td key={colIndex}>
+                                                {PriceFormats.COP(row[col.identifier])}
+                                            </td>
+                                        )
+                                    }
+
+                                    if (col.identifier === "createdAt") {
+                                        return (
+                                            <td key={colIndex}>
+                                                {row[col.identifier]?.toDate().toLocaleDateString()}
+                                            </td>
+                                        )
+                                    }
+
                                     return (
                                         <td key={colIndex} className="px-3 py-2 border-none">
-
-                                            {col.identifier === "price"
-                                                ? PriceFormats.COP(row[col.identifier])
-                                                : row[col.identifier]
-                                            }
+                                            {row[col.identifier]}
                                         </td>
                                     )
                                 })}
@@ -253,7 +266,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                     {IsOpenRow === rowIndex && (
                                         <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
 
-                                            <button className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button onClick={onView} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
@@ -267,7 +280,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                 Ver Más
                                             </button>
 
-                                            <button className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button onClick={onEdit} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"
@@ -280,7 +293,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit }) => {
                                                 Editar
                                             </button>
 
-                                            <button className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button onClick={onDelete} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"

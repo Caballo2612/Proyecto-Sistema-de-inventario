@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DataTables } from '../components/organisms/DataTable'
-import { collection, getDocs, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, onSnapshot } from 'firebase/firestore';
 import appFireBase from "../credentials";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
@@ -14,17 +14,17 @@ export const Users = ({ firestore }) => {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        async function getUsers() {
-            const querySnapshot = await getDocs(collection(firestore, 'Usuarios'));
-
-            const usuarios = querySnapshot.docs.map((doc) => ({
+        const unSubscribe = onSnapshot(collection(firestore, 'Usuarios'), (snapshot) => {
+            const usuarios = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
             }));
 
-            setUsuarios(usuarios)
-        }
-        getUsers();
+            setUsuarios(usuarios);
+        });
+
+        return () => unSubscribe();
+
     }, [firestore]);
 
     const handleSubmit = async (formData) => {
@@ -45,7 +45,12 @@ export const Users = ({ firestore }) => {
             Swal.fire({
                 icon: 'success',
                 title: 'Cuenta creada!',
-                text: 'Tu cuenta ha sido creada correctamente!',
+                text: `El Usuario ${nombre} fue creado con exito!`,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                toast: true,
+                timer: 2000,
+                position: 'top-end',
             });
         } catch (err) {
             Swal.fire({
