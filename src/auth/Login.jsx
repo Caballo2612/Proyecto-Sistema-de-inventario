@@ -23,7 +23,6 @@ const Login = () => {
             await Swal.fire({
                 icon: 'success',
                 title: 'Bienvenido de vuelta!',
-                text: 'Has iniciado sesión correctamente!',
             });
             navigate("/");
         } catch (err) {
@@ -54,7 +53,7 @@ const Login = () => {
             >
                 <Input type="text" placeholder="Email" required={true} name="email" id="email" />
                 <Input type="password" placeholder="Password" name="password" required={true} id="password" />
-                <a className="cursor-pointer">Olvidaste tu contraseña?</a>
+                <a className="cursor-pointer hover:underline">Olvidaste tu contraseña?</a>
                 <button className="bg-blue-500">Iniciar Sesión</button>
             </AuthForm>
         </div>

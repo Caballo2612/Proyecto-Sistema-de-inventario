@@ -116,7 +116,7 @@ export const Productos = ({ firestore }) => {
                     timerProgressBar: true,
                     timer: 3000,
                     toast: true,
-                    position: 'bottom-end'
+                    position: 'top-end'
                 })
             }
 
@@ -151,7 +151,7 @@ export const Productos = ({ firestore }) => {
                 timerProgressBar: true,
                 timer: 3000,
                 toast: true,
-                position: 'bottom-end'
+                position: 'top-end'
             })
 
         } catch (err) {

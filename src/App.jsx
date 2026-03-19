@@ -6,6 +6,7 @@ import { Compras } from "./routes/Compras"
 import { Users } from "./routes/Users"
 import { Productos } from "./routes/Productos"
 import { Proveedores } from "./routes/Proveedores"
+import Config from "./routes/Config"
 import appFireBase from "./credentials"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState } from "react"
@@ -62,6 +63,7 @@ function App() {
           <Route path="/Usuarios" element={<Users firestore={firestore} />} />
           <Route path="/Productos" element={<Productos firestore={firestore} />} />
           <Route path="/Proveedores" element={<Proveedores firestore={firestore} />} />
+          <Route path="/Configuracion/:section" element={<Config firestore={firestore} usuario={usuario} />} />
         </Route>
         :
         <Route path="*" element={<Login />} />

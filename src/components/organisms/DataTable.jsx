@@ -112,10 +112,9 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
 
             {Fields && IsOpen.Form && (
                 <>
-                    <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10'>
-                    </div>
-                    <div className='m-4 absolute w-6xl z-200 bg-white border-t-3 border-t-blue-600 shadow-md rounded-md'>
-                        <div className={``}>
+                    <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10' />
+                    <div className='fixed inset-0 left-[20%] flex items-center justify-center z-50 p-4 rounded-md'>
+                        <div className="w-full max-w-4xl bg-white border-t-3 border-t-blue-600 shadow-md rounded-md">
                             <div className='text-lg font-semibold p-4 border-b border-b-gray-300 flex items-center text-center gap-2'>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -128,10 +127,10 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                                     <path d="m31 25.4 13-13.1c.6-.6.6-1.5 0-2.1l-2-2.1c-.6-.6-1.5-.6-2.1 0L26.8 21.2c-.4.4-1 .4-1.4 0L12.3 8c-.6-.6-1.5-.6-2.1 0l-2.1 2.1c-.6.6-.6 1.5 0 2.1l13.1 13.1c.4.4.4 1 0 1.4L8 39.9c-.6.6-.6 1.5 0 2.1l2.1 2.1c.6.6 1.5.6 2.1 0L25.3 31c.4-.4 1-.4 1.4 0l13.1 13.1c.6.6 1.5.6 2.1 0L44 42c.6-.6.6-1.5 0-2.1L31 26.8c-.4-.4-.4-1 0-1.4z" />
                                 </svg>
                                 <span>
-                                    Nuevo
+                                    {editId ? "Editar" : "Nuevo"}
                                 </span>
                             </div>
-                            <form className='gap-3 p-4 w-6xl' id='formData' onSubmit={handleSubmit}>
+                            <form className='flex gap-3 p-4' id='formData' onSubmit={handleSubmit}>
                                 {Fields.map((field, index) => {
 
                                     if (field.type === "select") {
@@ -193,7 +192,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                                 })}
                             </form>
 
-                            <div className='flex justify-end p-3 border border-gray-200 gap-2'>
+                            <div className='flex justify-end p-3 border border-gray-200 gap-2 rounded-md'>
                                 <button type='submit' form='formData' className='bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-500 transition-colors duration-200'>Guardar</button>
                                 <button type='button' className='text-white px-4 py-2 rounded-sm bg-gray-500 hover:bg-gray-400 transition-colors duration-200' onClick={() => toggleMenu("Form")}>Cancelar</button>
                             </div>
@@ -376,6 +375,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
 
                                             <button
                                                 onClick={() => {
+                                                    setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
                                                     setViewData(row);
                                                     setIsOpen(prev => ({
                                                         ...prev,
@@ -398,6 +398,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
 
                                             <button
                                                 onClick={() => {
+                                                    setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
                                                     setFormData(row);
                                                     setEditId(row.id);
                                                     toggleMenu("Form");
@@ -416,7 +417,12 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                                                 Editar
                                             </button>
 
-                                            <button onClick={() => onDelete(row.id, row.nombre)} className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                            <button 
+                                                onClick={() =>{ 
+                                                    setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                    onDelete(row.id, row.nombre)
+                                                }} 
+                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
                                                 <svg
                                                     width="20"
                                                     height="20"

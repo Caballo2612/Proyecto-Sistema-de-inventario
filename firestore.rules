@@ -29,15 +29,49 @@ service cloud.firestore {
       allow read: if (request.auth.uid != null);
 
       allow create: if isAdmin()
+        && request.resource.data.keys().hasOnly([
+          'nombre',
+          'descripcion',
+          'precio',
+          'proveedor',
+          'sku',
+          'stock',
+          'createdAt'
+        ])
         && request.resource.data.nombre is string
+        && request.resource.data.nombre.size() > 0
+        && request.resource.data.nombre.size() <= 100
+        && request.resource.data.descripcion is string
         && request.resource.data.sku is string
+        && request.resource.data.proveedor is string
         && request.resource.data.stock is int
         && request.resource.data.stock >= 0
         && request.resource.data.precio is int
-        && request.resource.data.precio >= 0;
+        && request.resource.data.precio >= 0
+        && request.resource.data.createdAt is timestamp;
 
       allow update: if isAdmin()
-        && request.resource.data.sku == resource.data.sku;
+        && request.resource.data.keys().hasOnly([
+          'nombre',
+          'descripcion',
+          'precio',
+          'proveedor',
+          'sku',
+          'stock',
+          'createdAt'
+        ])
+        && request.resource.data.sku == resource.data.sku
+        && request.resource.data.nombre is string
+        && request.resource.data.nombre.size() > 0
+        && request.resource.data.nombre.size() <= 100
+        && request.resource.data.descripcion is string
+        && request.resource.data.sku is string
+        && request.resource.data.proveedor is string
+        && request.resource.data.stock is int
+        && request.resource.data.stock >= 0
+        && request.resource.data.precio is int
+        && request.resource.data.precio >= 0
+        && request.resource.data.createdAt == resource.data.createdAt;
 
       allow delete: if isAdmin();
     }

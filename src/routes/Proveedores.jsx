@@ -48,7 +48,7 @@ export const Proveedores = ({ firestore }) => {
                 showConfirmButton: false,
                 toast: true,
                 timer: 3000,
-                position: 'bottom-end',
+                position: 'top-end',
             });
 
         } catch (err) {
@@ -83,7 +83,7 @@ export const Proveedores = ({ firestore }) => {
                     timerProgressBar: true,
                     timer: 3000,
                     toast: true,
-                    position: 'bottom-end'
+                    position: 'top-end'
                 });
             }
 
