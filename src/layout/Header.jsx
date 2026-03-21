@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
-export const Header = ({ IsOpen, toggleMenu, usuario }) => {
+export const Header = ({ IsOpen, toggleMenu, usuario, system }) => {
 
     const Auth = getAuth(appFireBase);
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ export const Header = ({ IsOpen, toggleMenu, usuario }) => {
 
     return (
         <div className='flex-row flex z-50'>
-            <header className='w-full h-13 bg-blue-800 text-white flex items-center'>
+            <header className='w-full h-13 bg-blue-800 text-white flex items-center '>
                 <div>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,9 @@ export const Header = ({ IsOpen, toggleMenu, usuario }) => {
                     </svg>
                 </div>
                 <div>
-                    <span className='text-2xl ml-4 hidden md:block lg:block xl:block'>Nombre empresa</span>
+                    <span className='text-2xl ml-4 hidden md:block lg:block xl:block uppercase'>
+                        {system.sysName || 'sistema de inventario'}
+                    </span>
                 </div>
                 <div className='ml-auto mr-4 flex items-center gap-2 group cursor-pointer' onClick={() => toggleMenu('settings')}>
                     <svg
