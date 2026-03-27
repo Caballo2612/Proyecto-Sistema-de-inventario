@@ -18,7 +18,7 @@ export class PriceFormats {
     };
 
     static EUR(value) {
-        return new Intl.NumberFormat("de-DE", {
+        return new Intl.NumberFormat("es-ES", {
             style: "currency",
             currency: "EUR",
             maximumFractionDigits: 2,

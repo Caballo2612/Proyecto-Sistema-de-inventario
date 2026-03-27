@@ -69,9 +69,8 @@ const PersonalConfig = ({ usuario }) => {
                     </div>
                 </div>
 
-            <div className='bg-white py-3 flex justify-center rounded-lg gap-3 text-gray-500'>
+            <div className='flex justify-left rounded-lg gap-3 text-gray-500'>
                 <button className='rounded-lg px-3 py-2 bg-lime-300 cursor-pointer shadow-xl'>Guardar</button>
-                <button className='cursor-pointer px-3 py-2'>Cancelar</button>
             </div>
         </main>
     )

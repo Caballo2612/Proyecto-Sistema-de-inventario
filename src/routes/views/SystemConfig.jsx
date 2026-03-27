@@ -3,7 +3,7 @@ import Input from '../../components/molecules/Input'
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import Swal from 'sweetalert2';
 
-const CompanyConfig = ({ firestore }) => {
+const SystemConfig = ({ firestore }) => {
 
     const [system, setSystem] = useState({
         sysName: '',
@@ -72,7 +72,7 @@ const CompanyConfig = ({ firestore }) => {
         <main>
             <div className='flex gap-20 border-b border-b-gray-400 pb-5'>
                 <div className='text-gray-500 w-50'>
-                    Datos Del Sistema
+                    Información Del Sistema
                 </div>
                 <div className='flex flex-col gap-3'>
                     <Input
@@ -91,11 +91,11 @@ const CompanyConfig = ({ firestore }) => {
                     />
                 </div>
             </div>
-            <div className='bg-white py-3 flex justify-center rounded-lg gap-3 text-gray-500'>
+            <div className='flex justify-left rounded-lg gap-3 text-gray-500'>
                 <button onClick={handleSubmit} className='rounded-lg px-3 py-2 bg-lime-300 cursor-pointer shadow-xl'>Guardar</button>
             </div>
         </main>
     )
 }
 
-export default CompanyConfig
+export default SystemConfig

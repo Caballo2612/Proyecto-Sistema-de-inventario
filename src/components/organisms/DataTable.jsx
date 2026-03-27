@@ -311,158 +311,174 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                     </thead>
 
                     <tbody className="">
-                        {paginatedData.map((row, rowIndex) => (
-                            <tr
-                                key={rowIndex}
-                                className="even:bg-gray-200 odd:bg-white hover:bg-gray-100 transition-colors duration-200"
-                            >
-                                {columns.map((col, colIndex) => {
-
-                                    if (col.identifier === "estado") {
-                                        return (
-                                            <td key={colIndex} className='px-3 py-2 border-none'>
-                                                <div
-                                                    className={`${row[col.identifier] === "activo" ? 'bg-green-500' : 'bg-red-500'} inline-flex px-3 py-1 text-xs font-semibold tracking-widest rounded-md text-white text-center p-2 uppercase`}
-                                                >
-                                                    {row[col.identifier]}
-                                                </div>
-                                            </td>
-                                        )
-                                    }
-
-                                    if (col.identifier === "precio") {
-                                        return (
-                                            <td key={colIndex}>
-                                                {PriceFormats.COP(row[col.identifier])}
-                                            </td>
-                                        )
-                                    }
-
-                                    if (col.identifier === "createdAt") {
-                                        return (
-                                            <td key={colIndex}>
-                                                {row[col.identifier]?.toDate().toLocaleDateString()}
-                                            </td>
-                                        )
-                                    }
-
-                                    return (
-                                        <td key={colIndex} className="px-3 py-2 border-none">
-                                            {row[col.identifier]}
-                                        </td>
-                                    )
-                                })}
-
-                                <td className='px-3 py-2 relative'>
-                                    <button
-                                        className="border rounded-md px-2 py-1 bg-white hover:bg-gray-100 cursor-pointer flex items-center gap-1"
-                                        onClick={() => setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex)}
-                                    >
-                                        Acción
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            className={"transform transition-transform duration-200 " + (IsOpenRow === rowIndex ? "rotate-180" : "")}
-                                            fill="none"
-                                            viewBox="0 0 24 24">
-                                            <path fill="#0f0f0f" d="M5.707 9.71a1 1 0 0 0 0 1.415l4.892 4.887a2 2 0 0 0 2.828 0l4.89-4.89a1 1 0 1 0-1.414-1.415l-4.185 4.186a1 1 0 0 1-1.415 0L7.121 9.71a1 1 0 0 0-1.414 0" />
-                                        </svg>
-                                    </button>
-
-                                    {IsOpenRow === rowIndex && (
-                                        <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
-
-                                            <button
-                                                onClick={() => {
-                                                    setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
-                                                    setViewData(row);
-                                                    setIsOpen(prev => ({
-                                                        ...prev,
-                                                        View: true
-                                                    }));
-                                                }}
-                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
-                                                <svg
-                                                    width="20"
-                                                    height="20"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <g stroke="#33363f" strokeWidth="2">
-                                                        <circle cx="12" cy="12" r="3" />
-                                                        <path d="M21 12s-1-8-9-8-9 8-9 8" />
-                                                    </g>
-                                                </svg>
-                                                Ver Más
-                                            </button>
-
-                                            <button
-                                                onClick={() => {
-                                                    setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
-                                                    setFormData(row);
-                                                    setEditId(row.id);
-                                                    toggleMenu("Form");
-                                                }}
-                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
-
-                                                <svg
-                                                    width="20"
-                                                    height="20"
-                                                    viewBox="0 0 24 24">
-                                                    <g fill="none" stroke="blue" strokeWidth="2">
-                                                        <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
-                                                        <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
-                                                    </g>
-                                                </svg>
-                                                Editar
-                                            </button>
-
-                                            <button 
-                                                onClick={() =>{ 
-                                                    setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
-                                                    onDelete(row.id, row.nombre)
-                                                }} 
-                                                className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
-                                                <svg
-                                                    width="20"
-                                                    height="20"
-                                                    fill="none"
-                                                    stroke="red"
-                                                    viewBox="0 0 24 24">
-                                                    <path strokeWidth="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
-                                                </svg>
-                                                Eliminar
-                                            </button>
-                                        </div>
-                                    )}
-
+                        {paginatedData.length === 0
+                            ?
+                            <tr>
+                                <td colSpan={columns.length + 1} className="text-center py-5 text-gray-400">
+                                    Sin resultados
                                 </td>
-
                             </tr>
-                        ))}
+                            :
+                            paginatedData.map((row, rowIndex) => (
+                                <tr
+                                    key={rowIndex}
+                                    className="even:bg-gray-200 odd:bg-white hover:bg-gray-100 transition-colors duration-200"
+                                >
+                                    {columns.map((col, colIndex) => {
+
+                                        if (col.identifier === "estado") {
+                                            return (
+                                                <td key={colIndex} className='px-3 py-2 border-none'>
+                                                    <div
+                                                        className={`${row[col.identifier] === "activo" ? 'bg-green-500' : 'bg-red-500'} inline-flex px-3 py-1 text-xs font-semibold tracking-widest rounded-md text-white text-center p-2 uppercase`}
+                                                    >
+                                                        {row[col.identifier]}
+                                                    </div>
+                                                </td>
+                                            )
+                                        }
+
+                                        if (col.identifier === "precio") {
+                                            return (
+                                                <td key={colIndex}>
+                                                    {PriceFormats.COP(row[col.identifier])}
+                                                </td>
+                                            )
+                                        }
+
+                                        if (col.identifier === "createdAt") {
+                                            return (
+                                                <td key={colIndex}>
+                                                    {row[col.identifier]?.toDate().toLocaleDateString()}
+                                                </td>
+                                            )
+                                        }
+
+                                        return (
+                                            <td key={colIndex} className="px-3 py-2 border-none">
+                                                {row[col.identifier]}
+                                            </td>
+                                        )
+                                    })}
+
+                                    <td className='px-3 py-2 relative'>
+                                        <button
+                                            className="border rounded-md px-2 py-1 bg-white hover:bg-gray-100 cursor-pointer flex items-center gap-1"
+                                            onClick={() => setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex)}
+                                        >
+                                            Acción
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="20"
+                                                height="20"
+                                                className={"transform transition-transform duration-200 " + (IsOpenRow === rowIndex ? "rotate-180" : "")}
+                                                fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path fill="#0f0f0f" d="M5.707 9.71a1 1 0 0 0 0 1.415l4.892 4.887a2 2 0 0 0 2.828 0l4.89-4.89a1 1 0 1 0-1.414-1.415l-4.185 4.186a1 1 0 0 1-1.415 0L7.121 9.71a1 1 0 0 0-1.414 0" />
+                                            </svg>
+                                        </button>
+
+                                        {IsOpenRow === rowIndex && (
+                                            <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
+
+                                                <button
+                                                    onClick={() => {
+                                                        setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                        setViewData(row);
+                                                        setIsOpen(prev => ({
+                                                            ...prev,
+                                                            View: true
+                                                        }));
+                                                    }}
+                                                    className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                                    <svg
+                                                        width="20"
+                                                        height="20"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24">
+                                                        <g stroke="#33363f" strokeWidth="2">
+                                                            <circle cx="12" cy="12" r="3" />
+                                                            <path d="M21 12s-1-8-9-8-9 8-9 8" />
+                                                        </g>
+                                                    </svg>
+                                                    Ver Más
+                                                </button>
+
+                                                <button
+                                                    onClick={() => {
+                                                        setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                        setFormData(row);
+                                                        setEditId(row.id);
+                                                        toggleMenu("Form");
+                                                    }}
+                                                    className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+
+                                                    <svg
+                                                        width="20"
+                                                        height="20"
+                                                        viewBox="0 0 24 24">
+                                                        <g fill="none" stroke="blue" strokeWidth="2">
+                                                            <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
+                                                            <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
+                                                        </g>
+                                                    </svg>
+                                                    Editar
+                                                </button>
+
+                                                <button
+                                                    onClick={() => {
+                                                        setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                        onDelete(row.id, row.nombre)
+                                                    }}
+                                                    className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                                    <svg
+                                                        width="20"
+                                                        height="20"
+                                                        fill="none"
+                                                        stroke="red"
+                                                        viewBox="0 0 24 24">
+                                                        <path strokeWidth="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
+                                                    </svg>
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        )}
+
+                                    </td>
+
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
 
                 <div className='p-5 flex justify-between'>
-                    <span className=''>
-                        showing {startIndex + 1} to {Math.min(endIndex, filteredData.length)} of {filteredData.length} entries
-                    </span>
+                    {rowsPerPage !== 'Full'
+                        ?
+                        <span>
+                            showing {startIndex + 1} to {Math.min(endIndex, filteredData.length)} of {filteredData.length} entries
+                        </span>
+                        :
+                        <span>
+                            showing Full entries
+                        </span>
+                    }
                     <div className='flex items-center'>
                         <button
                             className='border border-gray-300 text-gray-400 px-2 py-1 bg-white hover:bg-gray-100 rounded-tl-sm rounded-bl-sm'
-                            disabled={currentPage === 1}
+                            disabled={currentPage === 1 || rowsPerPage === 'Full' || paginatedData.length === 0}
                             onClick={() => setCurrentPage(p => p - 1)}
                         >
                             Previous
                         </button>
                         <div className='bg-blue-500 text-white px-2 py-1 border border-blue-500'>
                             <span>
-                                {currentPage}
+                                {rowsPerPage === 'Full' ? 'Full' : currentPage}
                             </span>
                         </div>
                         <button
                             className='border border-gray-300 text-gray-400 px-2 py-1 bg-white hover:bg-gray-100 rounded-tr-sm rounded-br-sm'
-                            disabled={currentPage === totalPages}
+                            disabled={currentPage === totalPages || rowsPerPage === 'Full' || paginatedData.length === 0}
                             onClick={() => setCurrentPage(p => p + 1)}
                         >
                             Next

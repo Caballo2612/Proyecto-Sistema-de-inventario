@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 export const Sidebar = ({ IsOpen, usuario, system }) => {
     return (
-        <div className={`inset-0 z-20 bg-gray-800 min-h-svh shadow-md text-white overflow-x-hidden rounded-br-lg transition-all duration-300 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'} text-`}>
-            <div className='p-2 bg-blue-800 text-lg flex flex-row h-13 items-center uppercase gap-2'>
+        <div className={`inset-0 z-60 bg-gray-800 min-h-svh shadow-[4px_0_10px_rgba(0,0,0,0.5)] text-white overflow-x-hidden rounded-br-lg transition-all duration-300 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}>
+            <div className='p-2 pl-5 bg-blue-800 text-lg flex flex-row h-13 items-center uppercase gap-2'>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

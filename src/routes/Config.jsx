@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import CompanyConfig from './views/CompanyConfig';
+import SystemConfig from './views/SystemConfig';
 import PersonalConfig from './views/PersonalConfig';
 import SiteConfig from './views/SiteConfig';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,7 +21,7 @@ const Config = ({ usuario, firestore }) => {
             buttonName: "Diseño de Empresa",
             SectionName: "Configuracion De La Pagina",
             title: "Configuracion De Empresa",
-            component: CompanyConfig,
+            component: SystemConfig,
             permission: "Admin",
         },
         {
@@ -43,8 +43,10 @@ const Config = ({ usuario, firestore }) => {
     const ActiveComponent = activeSectionData?.component;
 
     const canAccess =
-        activeSectionData.permission === "all" ||
-        usuario?.rol === activeSectionData.permission;
+        activeSectionData && (
+            activeSectionData.permission === "all" ||
+            usuario?.rol === activeSectionData.permission
+        );
 
     useEffect(() => {
         if (activeSectionData && !canAccess) {
@@ -60,14 +62,26 @@ const Config = ({ usuario, firestore }) => {
         }
     }, [activeSectionData, canAccess, navigate]);
 
-    if (!canAccess) {
-        return null
-    };
+    useEffect(() => {
+        if (!activeSectionData) {
+            Swal.fire({
+                icon: 'error',
+                title: 'No encontrado',
+                text: 'Esta pagina no existe',
+                showConfirmButton: false,
+                timer: 3000,
+            }).then(() => {
+                navigate("/Configuracion/personal")
+            });
+        }
+    }, [activeSectionData, navigate]);
+
+    if (!canAccess || !activeSectionData) return null;
 
     return (
         <div className="flex flex-col xl:flex-row md:flex-row lg:flex-row h-full">
 
-            <div className="flex flex-col gap-3 xl:gap-0 lg:gap-0 md:gap-0 bg-gray-300/50 p-4 pr-15 min-h-full">
+            <div className="flex flex-col gap-3 xl:gap-0 lg:gap-0 md:gap-0 bg-gray-300/50 p-4 pr-15 xl:min-h-full md:min-h-full">
 
                 {sections.filter(sec => sec.permission === "all" || usuario?.rol === sec.permission)
                     .map(section => (

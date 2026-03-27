@@ -138,9 +138,7 @@ const Input = ({ type, name, placeholder, value, onChange, required, id, disable
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" viewBox="0 0 24 24"><path stroke="black" d="M14.83 9.18A4 4 0 0 0 8 12.01a4 4 0 0 0 1.16 2.82M12 16.01a4 4 0 0 0 4-4" /><path stroke="black" d="M17.61 6.39 6.38 17.62A21.8 21.8 0 0 1 2 11.99c4.71-8.23 10.44-10.1 15.61-5.6M21 3l-3.39 3.39M6.38 17.62 3 21M19.57 8.43A25.3 25.3 0 0 1 22 12.01c-4 7-8.73 9.39-13.23 7.22" /></svg>
                             }
                         </div>
-                        <svg className="absolute top-5 left-4" width={18} height={18} viewBox="0 0 344 384">
-                            <path d="M170.5 192q-35.5 0-60.5-25t-25-60.5T110 46t60.5-25T231 46t25 60.5t-25 60.5t-60.5 25zm0 43q31.5 0 69.5 9t69.5 29.5T341 320v43H0v-43q0-26 31.5-46.5T101 244t69.5-9z" fill="#6b7280" />
-                        </svg>
+                        <svg fill="none" className="absolute top-5 left-4" height={18} width={18} viewBox="0 0 24 24"><rect width="14" height="10" x="5" y="11" stroke="#6b7280" strokeWidth="2" rx="2"/><path stroke="#6b7280"  strokeWidth="2" d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.2" fill="#6b7280"/></svg>
                     </div>
                     {showRules && !disabled &&
                         <div className="flex flex-col p-2 gap-2 bg-gray-50 border-2 border-gray-200 rounded-md">
