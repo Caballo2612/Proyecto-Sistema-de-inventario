@@ -186,7 +186,7 @@ const Input = ({ type, name, placeholder, value, onChange, required, id, disable
                     required={required}
                     disabled={disabled}
                 />
-                <label className="absolute text-gray-500 text-base duration-150 transform top-4 left-10 z-10 origin-left peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:text-blue-600 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:scale-75">
+                <label className="absolute right-4 overflow-hidden text-ellipsis text-gray-500 text-base duration-150 transform top-4 left-10 z-10 origin-left peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:right-auto peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:scale-75">
                     {placeholder}
                 </label>
                 <svg className="absolute top-5 left-4" width={18} height={18} viewBox="0 0 344 384">

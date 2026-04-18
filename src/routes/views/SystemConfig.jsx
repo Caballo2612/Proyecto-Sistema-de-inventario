@@ -30,7 +30,6 @@ const SystemConfig = ({ firestore }) => {
         }
 
         try {
-
             const docuRef = doc(firestore, 'System', 'main');
 
             const data = { updatedAt: new Date() };
@@ -91,7 +90,7 @@ const SystemConfig = ({ firestore }) => {
                     />
                 </div>
             </div>
-            <div className='flex justify-left rounded-lg gap-3 text-gray-500'>
+            <div className='flex justify-end rounded-lg gap-3 py-2 text-gray-500'>
                 <button onClick={handleSubmit} className='rounded-lg px-3 py-2 bg-lime-300 cursor-pointer shadow-xl'>Guardar</button>
             </div>
         </main>

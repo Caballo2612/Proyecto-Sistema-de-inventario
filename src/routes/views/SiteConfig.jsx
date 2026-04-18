@@ -1,17 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Input from '../../components/molecules/Input';
+import { useOutletContext } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { themes } from '../../utils/themes';
 
 const SiteConfig = () => {
 
-    const colors = [
-        "#3b82f6",
-        "#a855f7",
-        "#eab308",
-        "#f97316",
-        "#ef4444",
-    ];
+    const { selectedTheme, setSelectedTheme, saveTheme } = useOutletContext();
 
-    const [selectedColor, setSelectedColor] = useState(colors[0])
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            await saveTheme(selectedTheme.name);
+
+            Swal.fire({
+                title: "Configuración Guardada",
+                text: "Tu configuración se ha guardado correctamente",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Error",
+                text: error.message || "Ocurrió un error al guardar la configuración",
+                icon: "error"
+            });
+        }
+    }
 
     return (
         <main>
@@ -23,22 +40,22 @@ const SiteConfig = () => {
 
                 <div className="flex flex-col gap-3">
 
-                    <div className='flex gap-2'>
-                        {colors.map((color) => (
+                    <div className='grid grid-cols-4 gap-2'>
+                        {themes.map((color) => (
                             <button
-                                key={color}
-                                onClick={() => setSelectedColor(color)}
+                                key={color.name}
+                                onClick={() => setSelectedTheme(color)}
                                 className={`w-6 h-6 rounded-full transition cursor-pointer
-                                            ${selectedColor === color
+                                            ${selectedTheme.headerColor === color.headerColor
                                         ? "ring-2 ring-gray-400 ring-offset-2 ring-offset-gray-200 scale-110"
                                         : ""}`}
-                                style={{ backgroundColor: color }}
+                                style={{ backgroundColor: color.headerColor }}
                             />
                         ))}
                     </div>
 
                     <span className='text-blue-500 cursor-pointer hover:underline text-sm'>
-                        Más Colores
+                        Más Temas
                     </span>
 
                     <Input
@@ -71,13 +88,6 @@ const SiteConfig = () => {
                     />
 
                     <Input
-                        name="textColor"
-                        id="textColor"
-                        label="Color de texto"
-                        type="color"
-                    />
-
-                    <Input
                         label="Tamaño Del Texto"
                         name="textSize"
                         id="textSize"
@@ -107,8 +117,8 @@ const SiteConfig = () => {
                 </div>
             </div>
 
-            <div className='flex justify-left rounded-lg gap-3 text-gray-500'>
-                <button className='rounded-lg px-3 py-2 bg-lime-300 cursor-pointer shadow-xl'>Guardar</button>
+            <div className='flex justify-end rounded-lg gap-3 py-2 text-gray-500'>
+                <button className='rounded-lg px-3 py-2 bg-lime-300 cursor-pointer shadow-xl' onClick={handleSubmit}>Guardar</button>
             </div>
 
         </main>

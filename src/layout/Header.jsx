@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
-export const Header = ({ IsOpen, toggleMenu, usuario, system }) => {
+export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) => {
 
     const Auth = getAuth(appFireBase);
     const navigate = useNavigate();
@@ -45,7 +45,10 @@ export const Header = ({ IsOpen, toggleMenu, usuario, system }) => {
 
     return (
         <div className='flex-row flex z-50'>
-            <header className='w-full h-13 bg-blue-800 text-white flex items-center '>
+            <header
+                className='w-full h-13 bg-blue-800 text-white flex items-center transition-colors duration-300'
+                style={{ backgroundColor: selectedTheme.headerColor, color: selectedTheme.textColor }}
+            >
                 <div>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
