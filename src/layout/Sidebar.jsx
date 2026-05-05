@@ -1,15 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const Sidebar = ({ IsOpen, usuario, system, selectedTheme }) => {
+export const Sidebar = ({ IsOpen, usuario, system, preferences }) => {
     return (
-        <div 
-            className={`inset-0 z-60 bg-gray-800 min-h-svh shadow-[4px_0_10px_rgba(0,0,0,0.5)] text-white overflow-x-hidden rounded-br-lg transition-all duration-300 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}
-            style={{backgroundColor: selectedTheme.sidebarColor, color: selectedTheme.textColor}}
+        <div
+            className={`inset-0 z-60 min-h-svh shadow-[4px_0_10px_rgba(0,0,0,0.5)] overflow-x-hidden rounded-br-lg transition-all duration-300 ${IsOpen.sidebar ? 'w-50 lg:w-80 md:w-80' : 'w-0'}`}
+            style={{
+                backgroundColor: preferences.theme.sidebarColor,
+                color: preferences.customColor ?? preferences.theme.textColor,
+            }}
         >
-            <div 
-                className='p-2 pl-5 bg-blue-800 text-lg flex flex-row h-13 items-center uppercase gap-2 transition-colors duration-300' 
-                style={{ backgroundColor: selectedTheme.headerColor, color: selectedTheme.textColor}}
+            <div
+                className='p-2 pl-5 flex flex-row h-13 items-center uppercase gap-2 transition-colors duration-300'
+                style={{
+                    backgroundColor: preferences.theme.headerColor
+                }}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -35,13 +40,13 @@ export const Sidebar = ({ IsOpen, usuario, system, selectedTheme }) => {
                     {system.shortSysName || 'SIS-INV'}
                 </span>
             </div>
-            <div className='text-lg mt-5 px-3'>
+            <div className='mt-5 px-3'>
                 <h2 className=''>
                     Menu
                 </h2>
             </div>
-            <div className='flex items-center gap-1 p-3 text-lg rounded-md flex-col'>
-                <Link to="/" 
+            <div className='flex items-center gap-1 p-3 rounded-md flex-col'>
+                <Link to="/"
                     className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'
                 >
                     <svg
@@ -112,7 +117,7 @@ export const Sidebar = ({ IsOpen, usuario, system, selectedTheme }) => {
                         Stock
                     </span>
                 </li>
-                <li className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
+                <Link to="/Ventas/historial" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -128,18 +133,18 @@ export const Sidebar = ({ IsOpen, usuario, system, selectedTheme }) => {
                     <span>
                         Ventas
                     </span>
-                </li>
+                </Link>
             </div>
             {usuario.rol === 'Admin'
                 &&
                 <div>
 
-                    <div className='text-lg px-3'>
+                    <div className=' px-3'>
                         <h2 className=''>
                             Mantenimiento
                         </h2>
                     </div>
-                    <div className='flex items-center gap-1 p-3 text-lg rounded-md flex-col'>
+                    <div className='flex items-center gap-1 p-3 rounded-md flex-col'>
                         <Link to="/Proveedores" className='flex items-center gap-2 hover:bg-gray-700 cursor-pointer w-full px-4.5 py-2 rounded-md'>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

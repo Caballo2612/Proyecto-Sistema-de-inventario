@@ -6,13 +6,13 @@ import { themes } from '../../utils/themes';
 
 const SiteConfig = () => {
 
-    const { selectedTheme, setSelectedTheme, saveTheme } = useOutletContext();
+    const { preferences, updatePreference, savePreferences } = useOutletContext();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            await saveTheme(selectedTheme.name);
+            await savePreferences();
 
             Swal.fire({
                 title: "Configuración Guardada",
@@ -40,13 +40,14 @@ const SiteConfig = () => {
 
                 <div className="flex flex-col gap-3">
 
-                    <div className='grid grid-cols-4 gap-2'>
+                    <div className='grid grid-cols-6 gap-3'>
                         {themes.map((color) => (
                             <button
                                 key={color.name}
-                                onClick={() => setSelectedTheme(color)}
+                                title={color.name}
+                                onClick={() => updatePreference('theme', color)}
                                 className={`w-6 h-6 rounded-full transition cursor-pointer
-                                            ${selectedTheme.headerColor === color.headerColor
+                                            ${preferences.theme.headerColor === color.headerColor
                                         ? "ring-2 ring-gray-400 ring-offset-2 ring-offset-gray-200 scale-110"
                                         : ""}`}
                                 style={{ backgroundColor: color.headerColor }}
@@ -57,13 +58,6 @@ const SiteConfig = () => {
                     <span className='text-blue-500 cursor-pointer hover:underline text-sm'>
                         Más Temas
                     </span>
-
-                    <Input
-                        name="themePersColor"
-                        id="themePersColor"
-                        label="Color Personalizado"
-                        type="color"
-                    />
                 </div>
 
             </div>
@@ -80,11 +74,22 @@ const SiteConfig = () => {
                         id="font"
                         type="selected"
                         info="La fuente que elijas se verá en toda la pagina"
+                        value={preferences.font}
+                        onChange={(e) => updatePreference('font', e.target.value)}
                         options={[
-                            { label: "Roboto", value: "roboto" },
-                            { label: "Inter", value: "inter" },
-                            { label: "Poppins", value: "poppins" }
+                            { label: "Roboto", value: "Roboto, sans-serif" },
+                            { label: "Inter", value: "Inter, sans-serif" },
+                            { label: "Poppins", value: "Poppins, sans-serif" }
                         ]}
+                    />
+
+                    <Input
+                        name="themePersColor"
+                        id="themePersColor"
+                        label="Color de Texto Personalizado"
+                        type="color"
+                        value={preferences.customColor}
+                        onChange={(e) => updatePreference('customColor', e.target.value)}
                     />
 
                     <Input
@@ -93,6 +98,8 @@ const SiteConfig = () => {
                         id="textSize"
                         type="selected"
                         info="el tamaño que elijas se utilizará en toda la pagina"
+                        value={preferences.textSize}
+                        onChange={(e) => updatePreference('textSize', e.target.value)}
                         options={[
                             { label: "Normal", value: "16px" },
                             { label: "Pequeño", value: "12px" },
@@ -102,11 +109,29 @@ const SiteConfig = () => {
                     />
 
                     <Input
+                        label="Espaciado entre letras"
+                        name="letterSpacing"
+                        id="letterSpacing"
+                        type="selected"
+                        info="el espaciado que elijas se utilizará en toda la pagina"
+                        value={preferences.letterSpacing}
+                        onChange={(e) => updatePreference('letterSpacing', e.target.value)}
+                        options={[
+                            { label: "Normal", value: "0px" },
+                            { label: "Pequeño", value: "-0.8px" },
+                            { label: "Grande", value: "2px" },
+                            { label: "Muy Grande", value: "6px" }
+                        ]}
+                    />
+
+                    <Input
                         label="Espaciado Entre Lineas"
                         name="spacing"
                         id="spacing"
                         type="selected"
                         info="el espaciado que elijas se utilizará en toda la pagina"
+                        value={preferences.spacing}
+                        onChange={(e) => updatePreference('spacing', e.target.value)}
                         options={[
                             { label: "Normal", value: "Normal" },
                             { label: "Sencillo (1.0)", value: "1.0" },

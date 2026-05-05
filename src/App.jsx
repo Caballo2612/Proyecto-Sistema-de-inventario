@@ -12,6 +12,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { doc, getDoc, getFirestore } from "firebase/firestore"
 import Loader from "./components/molecules/Loader"
+import { Ventas } from "./routes/Ventas"
 
 const Auth = getAuth(appFireBase);
 const firestore = getFirestore(appFireBase);
@@ -70,7 +71,8 @@ function App() {
         <Route element={<Layout usuario={usuario} firestore={firestore} />} >
           <Route path="/" element={<Dashboard firestore={firestore} usuario={usuario} />} />
           <Route path="/Compras" element={<Compras />} />
-          <Route path="/Usuarios" element={<Users firestore={firestore} />} />
+          <Route path="/Ventas/:view" element={<Ventas firestore={firestore} usuario={usuario} />} />
+          <Route path="/Usuarios" element={<Users firestore={firestore} usuario={usuario} />} />
           <Route path="/Productos" element={<Productos firestore={firestore} />} />
           <Route path="/Proveedores" element={<Proveedores firestore={firestore} />} />
           <Route path="/Configuracion/:section" element={<Config firestore={firestore} usuario={usuario} />} />

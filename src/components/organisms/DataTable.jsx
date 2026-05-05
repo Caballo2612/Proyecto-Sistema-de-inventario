@@ -1,8 +1,11 @@
 import { useState, useMemo } from 'react';
 import { PriceFormats } from '../../utils/priceFormats';
 import Input from '../molecules/Input';
+import { useOutletContext } from 'react-router-dom';
 
-export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, onEdit }) => {
+export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, onEdit, Actions, excludeFields }) => {
+
+    const { preferences } = useOutletContext();
 
     const [IsOpenRow, setIsOpenRow] = useState(null);
     const [editId, setEditId] = useState(null);
@@ -81,7 +84,10 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
     }, [filteredData, startIndex, endIndex, rowsPerPage]);
 
     return (
-        <div className='m-4 bg-white border-t-3 border-2 border-gray-200 border-t-blue-500 rounded-md'>
+        <div 
+            className='m-4 bg-white border-t-3 border-2 border-gray-200 border-t-blue-500 rounded-md'
+            style={{ borderTopColor: preferences.theme.headerColor }}
+        >
             <div className='border-b border-gray-300 px-6 py-2 flex justify-between'>
                 <h2 className=''>
                     {Title}
@@ -94,6 +100,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                             toggleMenu('Form');
                         }}
                         className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center gap-1'
+                        style={{ backgroundColor: preferences.theme.headerColor }}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +121,10 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                 <>
                     <div className='absolute w-full h-full bg-black opacity-45 inset-0 z-10' />
                     <div className='fixed inset-0 left-[20%] flex items-center justify-center z-50 p-4 rounded-md'>
-                        <div className="w-full max-w-4xl bg-white border-t-3 border-t-blue-600 shadow-md rounded-md">
+                        <div
+                            className="w-full max-w-4xl bg-white border-t-3 border-t-blue-600 shadow-md rounded-md"
+                            style={{ borderTopColor: preferences.theme.headerColor }}
+                        >
                             <div className='text-lg font-semibold p-4 border-b border-b-gray-300 flex items-center text-center gap-2'>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -193,8 +203,8 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                             </form>
 
                             <div className='flex justify-end p-3 border border-gray-200 gap-2 rounded-md'>
-                                <button type='submit' form='formData' className='bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-500 transition-colors duration-200'>Guardar</button>
-                                <button type='button' className='text-white px-4 py-2 rounded-sm bg-gray-500 hover:bg-gray-400 transition-colors duration-200' onClick={() => toggleMenu("Form")}>Cancelar</button>
+                                <button type='submit' form='formData' className='bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-500 transition-colors duration-200 cursor-pointer' style={{ backgroundColor: preferences.theme.headerColor }}>Guardar</button>
+                                <button type='button' className='text-white px-4 py-2 rounded-sm bg-gray-500 hover:bg-gray-400 transition-colors duration-200 cursor-pointer' onClick={() => toggleMenu("Form")}>Cancelar</button>
                             </div>
                         </div>
                     </div>
@@ -212,29 +222,53 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                             Detalles
                         </div>
 
-                        <div className='p-4 grid grid-cols-2 gap-4'>
+                        <div className='p-4 grid grid-cols-2 gap-4 max-h-200 overflow-y-auto'>
 
-                            {Object.entries(viewData).map(([key, value], index) => {
-                                if (key === "createdAt") {
-                                    value = value?.toDate().toLocaleDateString();
-                                }
+                            {Object.entries(viewData)
+                                .filter(([key]) => !excludeFields?.includes(key))
+                                .map(([key, value], index) => {
+                                    if (key === "createdAt" || key === "updatedAt" || key === "fecha") {
+                                        value = value?.toDate().toLocaleDateString();
+                                    }
 
-                                if (key === "precio") {
-                                    value = PriceFormats.COP(value);
-                                }
+                                    if (key === "precio" || key === "total" || key === "subtotal" || key === "iva" || key === "bolsa") {
+                                        value = PriceFormats.COP(value);
+                                    }
 
-                                return (
-                                    <div key={index} className='flex flex-col'>
-                                        <span className='text-gray-500 text-sm capitalize'>
-                                            {key}
-                                        </span>
+                                    if (key === "descuento") {
+                                        value = value + "%";
+                                    }
 
-                                        <span>
-                                            {value}
-                                        </span>
-                                    </div>
-                                )
-                            })}
+                                    if (key === "items") {
+                                        return (
+                                            <div key={index} className='flex flex-col'>
+                                                <span className='text-gray-500 text-sm capitalize'>
+                                                    {key}
+                                                </span>
+
+                                                <span>
+                                                    {value.map((item, i) => (
+                                                        <div key={i}>
+                                                            {item.nombre} x {item.cantidad} - Subtotal: {PriceFormats.COP(item.subtotal)}
+                                                        </div>
+                                                    ))}
+                                                </span>
+                                            </div>
+                                        )
+                                    }
+
+                                    return (
+                                        <div key={index} className='flex flex-col'>
+                                            <span className='text-gray-500 text-sm capitalize'>
+                                                {key}
+                                            </span>
+
+                                            <span>
+                                                {value}
+                                            </span>
+                                        </div>
+                                    )
+                                })}
 
                         </div>
 
@@ -338,7 +372,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                                             )
                                         }
 
-                                        if (col.identifier === "precio") {
+                                        if (col.identifier === "precio" || col.identifier === "total" || col.identifier === "subtotal") {
                                             return (
                                                 <td key={colIndex}>
                                                     {PriceFormats.COP(row[col.identifier])}
@@ -346,7 +380,7 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                                             )
                                         }
 
-                                        if (col.identifier === "createdAt") {
+                                        if (col.identifier === "createdAt" || col.identifier === "updatedAt" || col.identifier === "fecha") {
                                             return (
                                                 <td key={colIndex}>
                                                     {row[col.identifier]?.toDate().toLocaleDateString()}
@@ -381,66 +415,72 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                                         {IsOpenRow === rowIndex && (
                                             <div className="absolute top-full right-0 -mt-1 bg-white border rounded-md shadow-md flex flex-col z-100">
 
-                                                <button
-                                                    onClick={() => {
-                                                        setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
-                                                        setViewData(row);
-                                                        setIsOpen(prev => ({
-                                                            ...prev,
-                                                            View: true
-                                                        }));
-                                                    }}
-                                                    className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24">
-                                                        <g stroke="#33363f" strokeWidth="2">
-                                                            <circle cx="12" cy="12" r="3" />
-                                                            <path d="M21 12s-1-8-9-8-9 8-9 8" />
-                                                        </g>
-                                                    </svg>
-                                                    Ver Más
-                                                </button>
+                                                {(!Actions || Actions.includes("more")) && (
+                                                    <button
+                                                        onClick={() => {
+                                                            setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                            setViewData(row);
+                                                            setIsOpen(prev => ({
+                                                                ...prev,
+                                                                View: true
+                                                            }));
+                                                        }}
+                                                        className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                                        <svg
+                                                            width="20"
+                                                            height="20"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24">
+                                                            <g stroke="#33363f" strokeWidth="2">
+                                                                <circle cx="12" cy="12" r="3" />
+                                                                <path d="M21 12s-1-8-9-8-9 8-9 8" />
+                                                            </g>
+                                                        </svg>
+                                                        Ver Más
+                                                    </button>
+                                                )}
 
-                                                <button
-                                                    onClick={() => {
-                                                        setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
-                                                        setFormData(row);
-                                                        setEditId(row.id);
-                                                        toggleMenu("Form");
-                                                    }}
-                                                    className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                                {(!Actions || Actions.includes("edit")) && (
+                                                    <button
+                                                        onClick={() => {
+                                                            setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                            setFormData(row);
+                                                            setEditId(row.id);
+                                                            toggleMenu("Form");
+                                                        }}
+                                                        className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
 
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 24 24">
-                                                        <g fill="none" stroke="blue" strokeWidth="2">
-                                                            <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
-                                                            <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
-                                                        </g>
-                                                    </svg>
-                                                    Editar
-                                                </button>
+                                                        <svg
+                                                            width="20"
+                                                            height="20"
+                                                            viewBox="0 0 24 24">
+                                                            <g fill="none" stroke="blue" strokeWidth="2">
+                                                                <path d="M20 16v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4" />
+                                                                <path d="M12.5 15.8 22 6.2 17.8 2l-9.5 9.5L8 16z" />
+                                                            </g>
+                                                        </svg>
+                                                        Editar
+                                                    </button>
+                                                )}
 
-                                                <button
-                                                    onClick={() => {
-                                                        setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
-                                                        onDelete(row.id, row.nombre)
-                                                    }}
-                                                    className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        fill="none"
-                                                        stroke="red"
-                                                        viewBox="0 0 24 24">
-                                                        <path strokeWidth="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
-                                                    </svg>
-                                                    Eliminar
-                                                </button>
+                                                {(!Actions || Actions.includes("delete")) && (
+                                                    <button
+                                                        onClick={() => {
+                                                            setIsOpenRow(IsOpenRow === rowIndex ? null : rowIndex);
+                                                            onDelete(row.id, row.nombre)
+                                                        }}
+                                                        className="px-2 py-2 hover:bg-gray-100 text-left rounded-md cursor-pointer flex gap-2 items-center">
+                                                        <svg
+                                                            width="20"
+                                                            height="20"
+                                                            fill="none"
+                                                            stroke="red"
+                                                            viewBox="0 0 24 24">
+                                                            <path strokeWidth="2" d="m19 7-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16" />
+                                                        </svg>
+                                                        Eliminar
+                                                    </button>
+                                                )}
                                             </div>
                                         )}
 
@@ -471,7 +511,10 @@ export const DataTables = ({ columns, data, Title, Fields, onSubmit, onDelete, o
                         >
                             Previous
                         </button>
-                        <div className='bg-blue-500 text-white px-2 py-1 border border-blue-500'>
+                        <div 
+                            className='bg-blue-500 text-white px-2 py-1 border border-blue-500'
+                            style={{ backgroundColor: preferences.theme.headerColor, borderColor: preferences.theme.headerColor }}
+                        >
                             <span>
                                 {rowsPerPage === 'Full' ? 'Full' : currentPage}
                             </span>

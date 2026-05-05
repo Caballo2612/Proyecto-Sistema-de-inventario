@@ -88,5 +88,37 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /Ventas/{venta} {
+      allow read: if (request.auth.uid != null);
+
+      allow create: if request.auth.uid != null
+        && request.resource.data.keys().hasOnly([
+          'items',
+          'subtotal',
+          'descuento',
+          'iva',
+          'bolsa',
+          'total',
+          'fecha',
+          'vendedorId',
+          'metodoPago'
+        ])
+        && request.resource.data.items is list
+        && request.resource.data.items.size() > 0
+        && request.resource.data.subtotal is int
+        && request.resource.data.subtotal >= 0
+        && request.resource.data.descuento is int
+        && request.resource.data.descuento >= 0
+        && request.resource.data.iva is int
+        && request.resource.data.iva >= 0
+        && request.resource.data.bolsa is int
+        && request.resource.data.bolsa >= 0
+        && request.resource.data.total is int
+        && request.resource.data.total >= 0
+        && request.resource.data.fecha is timestamp
+        && request.resource.data.metodoPago is string
+        && request.resource.data.vendedorId == request.auth.uid;
+    }
+
   }
 }

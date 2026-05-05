@@ -80,7 +80,7 @@ export const Productos = ({ firestore }) => {
                 timerProgressBar: true,
                 showConfirmButton: false,
                 toast: true,
-                timer: 3000,
+                timer: 2000,
                 position: 'top-end',
             });
 
@@ -114,7 +114,7 @@ export const Productos = ({ firestore }) => {
                     icon: 'success',
                     showConfirmButton: false,
                     timerProgressBar: true,
-                    timer: 3000,
+                    timer: 2000,
                     toast: true,
                     position: 'top-end'
                 })
@@ -149,7 +149,7 @@ export const Productos = ({ firestore }) => {
                 icon: 'success',
                 showConfirmButton: false,
                 timerProgressBar: true,
-                timer: 3000,
+                timer: 2000,
                 toast: true,
                 position: 'top-end'
             })

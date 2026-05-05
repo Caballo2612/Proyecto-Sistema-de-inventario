@@ -16,7 +16,6 @@ export const Compras = () => {
         <DataTables
             columns={columns}
             data={[]}
-            Actions={null}
             Title="Lista de Compras"
         />
     )

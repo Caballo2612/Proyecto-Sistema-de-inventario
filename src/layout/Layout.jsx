@@ -9,7 +9,7 @@ export const Layout = ({ usuario, firestore }) => {
 
     const [IsOpen, setIsOpen] = useState({
         sidebar: true,
-        settings: false
+        header: true
     })
 
     const [system, setSystem] = useState({
@@ -17,7 +17,18 @@ export const Layout = ({ usuario, firestore }) => {
         shortSysName: ''
     })
 
-    const [selectedTheme, setSelectedTheme] = useState(themes[0]);
+    const [preferences, setPreferences] = useState({
+        theme: themes[0],
+        font: "Poppins, sans-serif",
+        textSize: '16px',
+        spacing: 'Normal',
+        customColor: '#ffffff',
+        letterSpacing: 'Normal'
+    });
+
+    const updatePreference = (key, value) => {
+        setPreferences(prev => ({ ...prev, [key]: value }));
+    };
 
     const toggleMenu = (menu) => {
         setIsOpen(prev => ({
@@ -32,11 +43,18 @@ export const Layout = ({ usuario, firestore }) => {
             const snap = await getDoc(docRef);
 
             if (snap.exists()) {
-                const themeName = snap.data().theme;
+                const saved = snap.data().preferences;
 
-                if (themeName) {
-                    const foundTheme = themes.find(t => t.name === themeName);
-                    if (foundTheme) setSelectedTheme(foundTheme);
+                if (saved) {
+                    const foundTheme = themes.find(t => t.name === saved.themeName);
+                    setPreferences({
+                        theme: foundTheme || themes[0],
+                        font: saved.font || "Poppins, sans-serif",
+                        textSize: saved.textSize || '16px',
+                        spacing: saved.spacing || 'Normal',
+                        customColor: saved.customColor || '#ffffff',
+                        letterSpacing: saved.letterSpacing || 'Normal'
+                    });
                 }
             }
         };
@@ -56,20 +74,35 @@ export const Layout = ({ usuario, firestore }) => {
         return () => unsubscribe()
     }, [firestore]);
 
-    const saveTheme = async (themeName) => {
+    const savePreferences = async () => {
         const docRef = doc(firestore, `Usuarios/${usuario.uid}`);
 
         await updateDoc(docRef, {
-            theme: themeName
+            preferences: {
+                themeName: preferences.theme.name,
+                font: preferences.font,
+                textSize: preferences.textSize,
+                spacing: preferences.spacing,
+                customColor: preferences.customColor,
+                letterSpacing: preferences.letterSpacing
+            }
         });
     };
 
     return (
-        <div className="flex">
+        <main 
+            className="flex"
+            style={{
+                fontFamily: preferences.font, 
+                letterSpacing: preferences.letterSpacing, 
+                fontSize: preferences.textSize,
+                lineHeight: preferences.spacing
+            }}
+        >
             <Sidebar
                 IsOpen={IsOpen}
                 usuario={usuario}
-                selectedTheme={selectedTheme}
+                preferences={preferences}
                 toggleMenu={toggleMenu}
                 system={system}
             />
@@ -77,14 +110,14 @@ export const Layout = ({ usuario, firestore }) => {
                 <Header
                     IsOpen={IsOpen}
                     usuario={usuario}
-                    selectedTheme={selectedTheme}
+                    preferences={preferences}
                     toggleMenu={toggleMenu}
                     system={system}
                 />
-                <main>
-                    <Outlet context={{ selectedTheme, setSelectedTheme, saveTheme }} />
-                </main>
+                <div >
+                    <Outlet context={{ preferences, updatePreference, savePreferences, toggleMenu }} />
+                </div>
             </div>
-        </div>
+        </main>
     )
 }

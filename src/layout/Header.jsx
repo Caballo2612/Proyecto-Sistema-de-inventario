@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
-export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) => {
+export const Header = ({ IsOpen, toggleMenu, usuario, system, preferences }) => {
 
     const Auth = getAuth(appFireBase);
     const navigate = useNavigate();
@@ -44,10 +44,16 @@ export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) =
     };
 
     return (
-        <div className='flex-row flex z-50'>
-            <header
-                className='w-full h-13 bg-blue-800 text-white flex items-center transition-colors duration-300'
-                style={{ backgroundColor: selectedTheme.headerColor, color: selectedTheme.textColor }}
+        <div
+            className='flex-row flex z-50'
+            style={{
+                color: preferences.customColor ?? preferences.theme.textColor,
+            }}
+        >
+            <header className={`w-full flex items-center transition-all duration-300 ${IsOpen.header ? 'h-13 opacity-100' : 'h-0 opacity-0'}`}
+                style={{
+                    backgroundColor: preferences.theme.headerColor,
+                }}
             >
                 <div>
                     <svg
@@ -65,7 +71,7 @@ export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) =
                     </svg>
                 </div>
                 <div>
-                    <span className='text-2xl ml-4 hidden md:block lg:block xl:block uppercase'>
+                    <span className='ml-4 hidden text-2xl md:block lg:block xl:block uppercase'>
                         {system.sysName || 'sistema de inventario'}
                     </span>
                 </div>
@@ -82,7 +88,7 @@ export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) =
                             strokeWidth="2"
                         />
                     </svg>
-                    <span className='text-lg'>
+                    <span>
                         {usuario ? usuario.nombre : 'usuario'}
                     </span>
                     <svg
@@ -97,8 +103,11 @@ export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) =
                     </svg>
                 </div>
 
-                <div className={`absolute right-4 top-14 bg-gray-800 text-white rounded-md shadow-lg w-46 z-10 p-2 inline-block transition-all duration-300 origin-top ${!IsOpen.settings ? 'opacity-0 scale-y-0' : 'opacity-100 scale-y-100'}`}>
-                    <Link to="/Configuracion/personal" className='flex hover:bg-gray-700 p-2 cursor-pointer text-lg flex-row items-center gap-2 rounded-md transition-colors duration-200'>
+                <div
+                    className={`absolute right-4 top-14 rounded-md shadow-lg w-46 z-10 p-2 inline-block transition-all duration-300 origin-top ${!IsOpen.settings ? 'opacity-0 scale-y-0' : 'opacity-100 scale-y-100'}`}
+                    style={{backgroundColor: preferences.theme.sidebarColor}}
+                >
+                    <Link to="/Configuracion/personal" className='flex hover:bg-gray-700 p-2 cursor-pointer flex-row items-center gap-2 rounded-md transition-colors duration-200'>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
@@ -111,8 +120,8 @@ export const Header = ({ IsOpen, toggleMenu, usuario, system, selectedTheme }) =
                             Configuración
                         </span>
                     </Link>
-                    <div className="border-t border-gray-700 my-1"></div>
-                    <div onClick={handleLogout} className='flex hover:bg-gray-700 p-2 cursor-pointer text-lg flex-row items-center gap-2 rounded-md transition-colors duration-200'>
+                    <div className="border-t border-gray-700 my-1" style={{ borderColor: preferences.theme.headerColor }}></div>
+                    <div onClick={handleLogout} className='flex hover:bg-gray-700 p-2 cursor-pointer flex-row items-center gap-2 rounded-md transition-colors duration-200'>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"

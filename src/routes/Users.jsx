@@ -81,7 +81,7 @@ export const Users = ({ firestore }) => {
                     icon: 'success',
                     showConfirmButton: false,
                     timerProgressBar: true,
-                    timer: 3000,
+                    timer: 2000,
                     toast: true,
                     position: 'top-end'
                 });
@@ -127,6 +127,7 @@ export const Users = ({ firestore }) => {
             Fields={Fields}
             onSubmit={handleSubmit}
             onDelete={onDeleteUser}
+            excludeFields={"preferences"}
         />
     )
 }
